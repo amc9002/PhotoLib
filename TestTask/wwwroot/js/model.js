@@ -1,7 +1,8 @@
+'use strict';
+
 class Model {
     constructor(storage) {
         this.storage = storage;
-
     }
 
     create(title, callback) {
