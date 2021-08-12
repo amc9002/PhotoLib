@@ -6,50 +6,50 @@
 
     <script src="http://maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
     <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
-    <script src="js/site.js"></script>
-    <script src="js/MultiItemCarousel.js"></script>
+ 
 </head>
 <body>
-<div class="container-fluid h-100 d-flex flex-column">
-    <div class="row d-flex row-gallery">
-        <div class="col MultiCarousel" data-items="1,3,5,6" data-slide="1" id="MultiCarousel" data-interval="1000">
-            <div class="MultiCarousel-inner"></div>
-            <button class="btn btn-primary leftLst">&lt;</button>
-            <button class="btn btn-primary rightLst">&gt;</button>
+    <div class="container-fluid h-100 d-flex flex-column">
+        <div class="row d-flex row-gallery">
+            <div class="col MultiCarousel" data-items="1,3,5,6" data-slide="1" id="MultiCarousel" data-interval="1000">
+                <div class="MultiCarousel-inner"></div>
+                <button class="btn btn-primary leftLst">&lt;</button>
+                <button class="btn btn-primary rightLst">&gt;</button>
+            </div>
+        </div>
+
+        <div class="row d-flex row-details">
+            <div class="col-5">image here</div>
+            <div class="col-2">EXIF here</div>
+            <!--Google map-->
+            <div class="col-5" map-container>
+                <iframe width="300" height="300" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="https://maps.google.com/maps?width=300&amp;height=300&amp;hl=en&amp;q=Minsk,%20%D0%9D%D0%B0%D0%BB%D1%96%D0%B1%D0%BE%D1%86%D0%BA%D0%B0%D1%8F,%2018+(Location)&amp;t=h&amp;z=14&amp;ie=UTF8&amp;iwloc=B&amp;output=embed"></iframe>
+            </div>
+            <!--Google Maps-->
+        </div>
+
+        <div class="row d-flex row-description">
+            <div class="col">description here</div>
+        </div>
+
+        <div class="row row-upload">
+            <div class="col-6 custom-file" id="customFile">
+                <input type="file" class="custom-file-input" id="inputFile">
+                <label class="custom-file-label" for="inputFile">
+                    Select file...
+                </label>
+            </div>
+            <div class="col-6"></div>
         </div>
     </div>
 
-    <div class="row d-flex row-details">
-        <div class="col-5">image here</div>
-        <div class="col-2">EXIF here</div>
-        <!--Google map-->
-        <div class="col-5" map-container>
-            <iframe width="300" height="300" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="https://maps.google.com/maps?width=300&amp;height=300&amp;hl=en&amp;q=Minsk,%20%D0%9D%D0%B0%D0%BB%D1%96%D0%B1%D0%BE%D1%86%D0%BA%D0%B0%D1%8F,%2018+(Location)&amp;t=h&amp;z=14&amp;ie=UTF8&amp;iwloc=B&amp;output=embed"></iframe>
-        </div>
-        <!--Google Maps-->
-    </div>
-
-    <div class="row d-flex row-description">
-        <div class="col">description here</div>
-    </div>
-
-    <div class="row row-upload">
-        <div class="col-6 custom-file" id="customFile">
-            <input type="file" class="custom-file-input" id="inputFile">
-            <label class="custom-file-label" for="inputFile">
-                Select file...
-            </label>
-        </div>
-        <div class="col-6"></div>
-    </div>
-</div>
-
-<script src="js/store.js"></script>
-<script src="js/model.js"></script>
-<script src="js/template.js"></script>
-<script src="js/view.js"></script>
-<script src="js/controller.js"></script>
-<script src="js/app.js"></script>
-<script src="js/site.js"></script>
+    <script src="js/MultiItemCarousel.js"></script>
+    <script src="js/store.js"></script>
+    <script src="js/model.js"></script>
+    <script src="js/template.js"></script>
+    <script src="js/view.js"></script>
+    <script src="js/controller.js"></script>
+    <script src="js/app.js"></script>
+    <script src="js/site.js"></script>
 </body>
 </html> 
