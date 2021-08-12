@@ -73,3 +73,4 @@
 	window.app = window.app || {};
 	window.app.Template = Template;
 })(window);
+

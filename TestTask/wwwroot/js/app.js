@@ -8,13 +8,3 @@ class App {
         this.controller = new app.Controller(this.model, this.view);
     }
 }
-
-//(function () {
-//    'use strict';
-
-//    var app = new App();
-
-//    $(window).on('load', function () {
-//        app.controller.showAll();
-//    });
-//})();
