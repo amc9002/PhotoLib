@@ -2,7 +2,7 @@
 
 class App {
     constructor() {
-        this.storage = new app.Store();
+        this.storage = new Store();
         this.model = new Model(this.storage);
         this.template = new app.Template();
         this.view = new app.View(this.template);
