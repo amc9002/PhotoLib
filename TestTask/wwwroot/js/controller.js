@@ -1,117 +1,100 @@
-(function (window) {
-	'use strict';
+'use strict';
 
-	/**
-	 * Takes a model and view and acts as the controller between them
-	 *
-	 * @constructor
-	 * @param {object} model The model instance
-	 * @param {object} view The view instance
-	 */
-	function Controller(model, view) {
-		var self = this;
-		self.model = model;
-		self.view = view;
+class Controller {
 
-		self.view.bind('itemAdd', function (title) {
-			self.addItem(title);
-		});
+    constructor(model, view) {
+        var self = this;
+        self.model = model;
+        self.view = view;
 
-		self.view.bind('itemEdit', function (item) {
-			self.editItem(item.id);
-		});
+        self.view.bind('itemAdd', function (title) {
+            self.addItem(title);
+        });
 
-		self.view.bind('itemEditDone', function (item) {
-			self.editItemSave(item.id, item.title);
-		});
+        self.view.bind('itemEdit', function (item) {
+            self.editItem(item.id);
+        });
 
-		self.view.bind('itemEditCancel', function (item) {
-			self.editItemCancel(item.id);
-		});
+        self.view.bind('itemEditDone', function (item) {
+            self.editItemSave(item.id, item.title);
+        });
 
-		self.view.bind('itemRemove', function (item) {
-			self.removeItem(item.id);
-		});
-	}
+        self.view.bind('itemEditCancel', function (item) {
+            self.editItemCancel(item.id);
+        });
 
-	/**
-	 * An event to fire on load. Will get all items and display them in the
-	 * todo-list
-	 */
-	Controller.prototype.showAll = function () {
-		var self = this;
-		self.model.read(function (data) {
-			self.view.render('showEntries', data);
-		});
-	};
+        self.view.bind('itemRemove', function (item) {
+            self.removeItem(item.id);
+        });
+    }
 
-	/**
-	 * An event to fire whenever you want to add an item. Simply pass in the event
-	 * object and it'll handle the DOM insertion and saving of the new item.
-	 */
-	Controller.prototype.addItem = function (title) {
-		var self = this;
+    showAll() {
+        var self = this;
+        self.model.read(function (data) {
+            self.view.render('showEntries', data);
+        });
+    }
 
-		if (title.trim() === '') {
-			return;
-		}
+    /**
+    * An event to fire whenever you want to add an item. Simply pass in the event
+    * object and it'll handle the DOM insertion and saving of the new item.
+    */
+    addItem(title) {
+        var self = this;
 
-		self.model.create(title, function () {
-			self.view.render('clearNewTodo');
-		});
-	};
+        if (title.trim() === '') {
+            return;
+        }
 
-	/*
-	 * Triggers the item editing mode.
-	 */
-	Controller.prototype.editItem = function (id) {
-		var self = this;
-		self.model.read(id, function (data) {
-			self.view.render('editItem', {id: id, title: data[0].title});
-		});
-	};
+        self.model.create(title, function () {
+            self.view.render('clearNewTodo');
+        });
+    }
 
-	/*
-	 * Finishes the item editing mode successfully.
-	 */
-	Controller.prototype.editItemSave = function (id, title) {
-		var self = this;
-		title = title.trim();
+    /*
+    * Triggers the item editing mode.
+    */
+    editItem(id) {
+        var self = this;
+        self.model.read(id, function (data) {
+            self.view.render('editItem', { id: id, title: data[0].title });
+        });
+    }
 
-		if (title.length !== 0) {
-			self.model.update(id, {title: title}, function () {
-				self.view.render('editItemDone', {id: id, title: title});
-			});
-		} else {
-			self.removeItem(id);
-		}
-	};
+    /*
+     * Finishes the item editing mode successfully.
+     */
+    editItemSave(id, title) {
+        var self = this;
+        title = title.trim();
 
-	/*
-	 * Cancels the item editing mode.
-	 */
-	Controller.prototype.editItemCancel = function (id) {
-		var self = this;
-		self.model.read(id, function (data) {
-			self.view.render('editItemDone', {id: id, title: data[0].title});
-		});
-	};
+        if (title.length !== 0) {
+            self.model.update(id, { title: title }, function () {
+                self.view.render('editItemDone', { id: id, title: title });
+            });
+        } else {
+            self.removeItem(id);
+        }
+    }
 
-	/**
-	 * By giving it an ID it'll find the DOM element matching that ID,
-	 * remove it from the DOM and also remove it from storage.
-	 *
-	 * @param {number} id The ID of the item to remove from the DOM and
-	 * storage
-	 */
-	Controller.prototype.removeItem = function (id) {
-		var self = this;
-		self.model.delete(id, function () {
-			self.view.render('removeItem', id);
-		});
-	};
+    editItemCancel(id) {
+        var self = this;
+        self.model.read(id, function (data) {
+            self.view.render('editItemDone', { id: id, title: data[0].title });
+        });
+    }
 
-	// Export to window
-	window.app = window.app || {};
-	window.app.Controller = Controller;
-})(window);
+    /**
+     * By giving it an ID it'll find the DOM element matching that ID,
+     * remove it from the DOM and also remove it from storage.
+     *
+     * @param {number} id The ID of the item to remove from the DOM and
+     * storage
+     */
+    removeItem(id) {
+        var self = this;
+        self.model.delete(id, function () {
+            self.view.render('removeItem', id);
+        });
+    }
+}
