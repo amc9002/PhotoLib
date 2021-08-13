@@ -1,156 +1,144 @@
-(function (window) {
-	'use strict';
+'use strict';
 
-	/**
-	     * View that abstracts away the browser's DOM completely.
-	     * It has two simple entry points:
-	     *
-	     *   - bind(eventName, handler)
-	     *     Takes a todo application event and registers the handler
-	     *   - render(command, parameterObject)
-	     *     Renders the given command with the options
-	     */
-	function View(template) {
-		this.template = template;
+class View {
 
-		this.ENTER_KEY = 13;
-		this.ESCAPE_KEY = 27;
+    constructor(template) {
+        this.template = template;
 
-		this.$todoList = $('.MultiCarousel-inner');
-		this.$main = $('.main');
-		this.$newTodo = $('.new-todo');
-	}
+        this.ENTER_KEY = 13;
+        this.ESCAPE_KEY = 27;
 
-	View.prototype._removeItem = function (id) {
-		var elem = $('[data-id="' + id + '"]');
+        this.$todoList = $('.MultiCarousel-inner');
+        this.$main = $('.main');
+        this.$newTodo = $('.new-todo');
+    }
 
-		if (elem) {
-			this.$todoList.removeChild(elem);
-		}
-	};
+    _removeItem (id) {
+        var elem = $('[data-id="' + id + '"]');
 
-	View.prototype._editItem = function (id, title) {
-		var listItem = $('[data-id="' + id + '"]');
+        if (elem) {
+            this.$todoList.removeChild(elem);
+        }
+    }
 
-		if (!listItem) {
-			return;
-		}
+    _editItem (id, title) {
+        var listItem = $('[data-id="' + id + '"]');
 
-		listItem.className = listItem.className + ' editing';
+        if (!listItem) {
+            return;
+        }
 
-		var input = document.createElement('input');
-		input.className = 'edit';
+        listItem.className = listItem.className + ' editing';
 
-		listItem.appendChild(input);
-		input.focus();
-		input.value = title;
-	};
+        var input = document.createElement('input');
+        input.className = 'edit';
 
-	View.prototype._editItemDone = function (id, title) {
-		var listItem = $('[data-id="' + id + '"]');
+        listItem.appendChild(input);
+        input.focus();
+        input.value = title;
+    }
 
-		if (!listItem) {
-			return;
-		}
+    _editItemDone (id, title) {
+        var listItem = $('[data-id="' + id + '"]');
 
-		var input = $(listitem).find('input.edit');
-		listItem.removeChild(input);
+        if (!listItem) {
+            return;
+        }
 
-		listItem.className = listItem.className.replace('editing', '');
+        var input = $(listitem).find('input.edit');
+        listItem.removeChild(input);
 
-		$(listitem).find('label').forEach(function (label) {
-			label.textContent = title;
-		});
-	};
+        listItem.className = listItem.className.replace('editing', '');
 
-	View.prototype.render = function (viewCmd, parameter) {
-		var self = this;
-		var viewCommands = {
-			showEntries: function () {
-				self.$todoList.html(self.template.show(parameter));
-				$(window).trigger('resize');	// resize the carousel
-			},
-			removeItem: function () {
-				self._removeItem(parameter);
-			},
-			clearNewTodo: function () {
-				self.$newTodo.value = '';
-			},
-			editItem: function () {
-				self._editItem(parameter.id, parameter.title);
-			},
-			editItemDone: function () {
-				self._editItemDone(parameter.id, parameter.title);
-			}
-		};
+        $(listitem).find('label').forEach(function (label) {
+            label.textContent = title;
+        });
+    }
 
-		viewCommands[viewCmd]();
-	};
+    render (viewCmd, parameter) {
+        var self = this;
+        var viewCommands = {
+            showEntries: function () {
+                self.$todoList.html(self.template.show(parameter));
+                $(window).trigger('resize');	// resize the carousel
+            },
+            removeItem: function () {
+                self._removeItem(parameter);
+            },
+            clearNewTodo: function () {
+                self.$newTodo.value = '';
+            },
+            editItem: function () {
+                self._editItem(parameter.id, parameter.title);
+            },
+            editItemDone: function () {
+                self._editItemDone(parameter.id, parameter.title);
+            }
+        };
 
-	View.prototype._itemId = function (element) {
-		var li = $(element).closest('li');
-		return parseInt(li.dataset.id, 10);
-	};
+        viewCommands[viewCmd]();
+    }
 
-	View.prototype._bindItemEditDone = function (handler) {
-		var self = this;
-		self.$todoList.find('li .edit').on('blur', function () {
-			if (!this.dataset.iscanceled) {
-				handler({
-					id: self._itemId(this),
-					title: this.value
-				});
-			}
-		});
+    _itemId (element) {
+        var li = $(element).closest('li');
+        return parseInt(li.dataset.id, 10);
+    }
 
-		self.$todoList.find('li .edit').on('keypress', function (event) {
-			if (event.keyCode === self.ENTER_KEY) {
-				// Remove the cursor from the input when you hit enter just like if it
-				// were a real form
-				this.blur();
-			}
-		});
-	};
+    _bindItemEditDone (handler) {
+        var self = this;
+        self.$todoList.find('li .edit').on('blur', function () {
+            if (!this.dataset.iscanceled) {
+                handler({
+                    id: self._itemId(this),
+                    title: this.value
+                });
+            }
+        });
 
-	View.prototype._bindItemEditCancel = function (handler) {
-		var self = this;
-		self.$todoList.find('li .edit').on('keyup', function (event) {
-			if (event.keyCode === self.ESCAPE_KEY) {
-				this.dataset.iscanceled = true;
-				this.blur();
+        self.$todoList.find('li .edit').on('keypress', function (event) {
+            if (event.keyCode === self.ENTER_KEY) {
+                // Remove the cursor from the input when you hit enter just like if it
+                // were a real form
+                this.blur();
+            }
+        });
+    }
 
-				handler({id: self._itemId(this)});
-			}
-		});
-	};
+    _bindItemEditCancel (handler) {
+        var self = this;
+        self.$todoList.find('li .edit').on('keyup', function (event) {
+            if (event.keyCode === self.ESCAPE_KEY) {
+                this.dataset.iscanceled = true;
+                this.blur();
 
-	View.prototype.bind = function (event, handler) {
-		var self = this;
-		if (event === 'itemAdd') {
-			self.$newTodo.on('change', function () {
-				handler(self.$newTodo.value);
-			});
+                handler({ id: self._itemId(this) });
+            }
+        });
+    }
 
-		} else if (event === 'itemEdit') {
-			self.$todoList.find('li label').on('dblclick', function () {
-				handler({id: self._itemId(this)});
-			});
+    bind (event, handler) {
+        var self = this;
+        if (event === 'itemAdd') {
+            self.$newTodo.on('change', function () {
+                handler(self.$newTodo.value);
+            });
 
-		} else if (event === 'itemRemove') {
-			self.$todoList.find('.destroy').on('click', function () {
-				handler({id: self._itemId(this)});
-			});
+        } else if (event === 'itemEdit') {
+            self.$todoList.find('li label').on('dblclick', function () {
+                handler({ id: self._itemId(this) });
+            });
 
-		} else if (event === 'itemEditDone') {
-			self._bindItemEditDone(handler);
+        } else if (event === 'itemRemove') {
+            self.$todoList.find('.destroy').on('click', function () {
+                handler({ id: self._itemId(this) });
+            });
 
-		} else if (event === 'itemEditCancel') {
-			self._bindItemEditCancel(handler);
-		}
-	};
+        } else if (event === 'itemEditDone') {
+            self._bindItemEditDone(handler);
 
-	// Export to window
-	window.app = window.app || {};
-	window.app.View = View;
-}(window));
+        } else if (event === 'itemEditCancel') {
+            self._bindItemEditCancel(handler);
+        }
+    }
+}
 
