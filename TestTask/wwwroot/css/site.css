@@ -4,7 +4,13 @@ html {
 
 body {
     height: 100%;
+    border: 1px;
+    border-color: magenta;
 }
+
+/*div {
+    border: 1px solid magenta !important;
+}*/
 
 .row-gallery {
 }
@@ -20,6 +26,10 @@ body {
     margin-left: auto;
     margin-right: auto;
     display: block;
+}
+
+.row-scrollbar {
+    flex: 1;
 }
 
 .row-details {
