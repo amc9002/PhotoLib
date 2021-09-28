@@ -12,22 +12,6 @@ body {
     border: 1px solid magenta !important;
 }*/
 
-.row-gallery {
-}
-
-.row-gallery .item {
-    height: 200px;
-    width: 200px;
-}
-
-.row-gallery .item img {
-    max-height: 200px;
-    max-width: 200px;
-    margin-left: auto;
-    margin-right: auto;
-    display: block;
-}
-
 .row-scrollbar {
     flex: 1;
 }
@@ -46,4 +30,33 @@ body {
 
 .map-container {
     width: 100%;
+}
+
+.ImageList {
+    overflow: auto;
+    white-space: nowrap;
+}
+
+.ImageList .item {
+    height: 200px;
+    width: 200px;
+    display: inline-block;
+    margin: 0 10px;
+}
+
+.ImageList .item img {
+    max-height: 200px;
+    max-width: 200px;
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+}
+
+.Title {
+    font-weight: bold;
+}
+
+.BigImage {
+    max-height: 580px;
+    max-width: 650px;
 }

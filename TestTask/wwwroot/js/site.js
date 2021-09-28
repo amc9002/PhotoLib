@@ -6,4 +6,5 @@
     $(window).on('load', function () {
         app.controller.showAll();
     });
+    window.myApp = app;
 })();

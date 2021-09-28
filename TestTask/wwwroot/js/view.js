@@ -28,8 +28,8 @@ class View {
         this.$Exif.html(exif);
 
 
-        // bind the 'click' event
-        const handler = handlers['click'];
+        // bind the 'SelectImage' event
+        const handler = handlers['SelectImage'];
         this.$imageList.find('div.item').on('click', (e) => {
             const id = $(e.currentTarget).data('id');
             handler(id);
@@ -37,9 +37,11 @@ class View {
     }
 
     editImage(item, handlers) {
-        this.$currentImage.html(item.src);
+        //this.$currentImage.html(item.src);
 		// TODO: render everything here:
 		// the image, the EXIF info, the map, the description
+        let html = `<img class="BigImage" src="${item.src}" />`;
         
+        this.$currentImage.html(html);
     }
 }

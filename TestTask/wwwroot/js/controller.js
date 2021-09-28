@@ -7,7 +7,7 @@ class Controller {
         this.view = view;
 
         this.handlers = {
-            'click': (id) => this.editItem(id),
+            'SelectImage': (id) => this.editImage(id),
         };
     }
 
@@ -19,7 +19,7 @@ class Controller {
     editImage(id) {
         const item = this.model.read(id);
         if (item) {
-            this.view.editItem(item, this.handlers);
+            this.view.editImage(item, this.handlers);
         }
     }
 }
