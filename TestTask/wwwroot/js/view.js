@@ -5,7 +5,9 @@ class View {
     constructor() {
         this.$imageList = $('.ImageList');
         this.$currentImage = $('.CurrentImage');
-        this.$Exif = $('.Exif');
+        this.$exif = $('.Exif');
+        this.$descr = $('.Descr');
+        this.$iframe = $('iframe');
     }
 
     showImages(data, handlers) {
@@ -18,14 +20,14 @@ class View {
         });
         this.$imageList.html(html);
 
-        let exif = '';
-        data.forEach((x) => {
-            exif += ` <span class="Title"> title </span> "${x.title}", lat "${x.lat}", long "${x.long}" `
-                + `<br>`;
-        });
+        //let exif = '';
+        //data.forEach((x) => {
+        //    exif += ` <span class="Title"> title </span> "${x.title}", lat "${x.lat}", long "${x.long}" `
+        //        + `<br>`;
+        //});
 
-        this.$Exif.attr('style', 'border: 3px dotted blue; color: red');
-        this.$Exif.html(exif);
+        //this.$Exif.attr('style', 'border: 3px dotted blue; color: red'); 
+        //this.$Exif.html(exif);
 
 
         // bind the 'SelectImage' event
@@ -41,7 +43,14 @@ class View {
 		// TODO: render everything here:
 		// the image, the EXIF info, the map, the description
         let html = `<img class="BigImage" src="${item.src}" />`;
-        
         this.$currentImage.html(html);
+
+        let exif = `<span class="Title"> title </span> "${item.title}", lat "${item.lat}", long "${item.long}" `;
+        this.$exif.html(exif);
+
+        let mapUrl = `http://maps.google.com/maps?z=14&t=m&q=loc:${item.lat}+${item.long}&output=embed`;
+        this.$iframe.attr('src', mapUrl);
+
+        console.log(mapUrl);
     }
 }
