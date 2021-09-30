@@ -57,6 +57,16 @@ body {
 }
 
 .BigImage {
-    max-height: 580px;
-    max-width: 650px;
+    max-height: 400px;
+    max-width: 400px;
 }
+
+.Descr {
+    height: 300px;
+    max-width: 500px;
+}
+
+.Descr textarea {
+    height: 100px;
+    width: 200px;
+ }    

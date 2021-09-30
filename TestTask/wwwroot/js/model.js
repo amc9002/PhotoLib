@@ -8,72 +8,65 @@ class Model {
 				id: 1,
 				src: "img/nintchdbpict000177689785.jpg",
 				title: "Queen Elizabeth II",
-				lat: 25.15,
-				long: 34.25
+				lat: 25.262283665613012, 
+				long: 55.28102574386779
 			},
 			{
 				id: 2,
-				src: "img/image_2019_07_24T08_35_23_076Z-1bd827adeaad7c2ad727d015ff388060d71a6647.png",
-				title: "Kiebicz and Czarnamyrdzin",
-				//title: "Кебіч і Чарнамырдзін: Пане, дапамажы выжыць сярод гэтай сьмяротнай любові!",
-				lat: 45.15,
-				long: 20.25
+				src: "img/Queen-Mary-Ship2-678x399.jpg",
+				title: "Queen Mary",
+				lat: 33.7528882877576, 
+				long: -118.18976604985308
 			},
 			{
 				id: 3,
-				src: "img/EhXMP4JWsAAOX4C.jpg",
-				//title: "Бордэр-коллі - страшнейшага зьвяра няма!",
-				title: "Border-colli",
-				lat: 60.15,
-				long: 70.25
+				src: "img/1024px-The_Cutty_Sark_2005-01-24.jpg",
+				title: "Cutty Sark",
+				lat: 51.48288562451109, 
+				long: -0.009602016066953408
 			},
 			{
 				id: 4,
-				src: "img/unnamed (1).jpg",
-				//title: "Карона для правінцыі",
-				title: "Uniform",
-				lat: 33.15,
-				long: 38.25
+				src: "img/Dar-Pomorza.jpg",
+				title: "Dar Pomorza",
+				lat: 54.51963008070638,
+				long: 18.55284670392696
 			},
 			{
 				id: 5,
-				src: "img/22_d716f10c63465a523b294f9320b49650_839.jpg",
-				//title: "Ды каб ты зубы сьцёр!",
-				title: "Lukaszenka",
-				lat: 48.15,
-				long: 50.25
+				src: "img/Royal-Yacht-Britannia-e1593443668468-1024x500.jpg",
+				title: "The Royal Yacht Britannia",
+				lat: 55.98231143951744,
+				long: -3.1772518154134617
 			},
 			{
 				id: 6,
-				src: "img/205429-1.jpg",
-				//title: "Вой, коцікі!!",
-				title: "Cats",
-				lat: 42.15,
-				long: 60.25
+				src: "img/Discovery.jpg",
+				title: "Discovery",
+				lat: 56.45692619861102,
+				long: -2.9679623365134353
 			},
 			{
 				id: 7,
-				src: "img/120097761_2981974798575404_3906031215242602525_o.jpg",
-				//title: "Сьцяпан Бандэра сустракаецца з Рыбэнтропам. А не, гэта ж Молатаў!",
-				title: "Molotov and Ribbentrop",
-				lat: 62.15,
-				long: 13.25
+				src: "img/uss-constitution-167366cf2fa4cd30.jpg",
+				title: "Constitution",
+				lat: 42.37246479091648,
+				long: -71.0565651081412
 			},
 			{
 				id: 8,
-				src: "img/132621084_3517441275014469_1135871548250275265_o.jpg",
-				//title: "Вясёлых Калядаў!",
-				title: "Merry Christmas!",
-				lat: 48.15,
-				long: 22.25
+				src: "img/Japanese_battleship_Mikasa_in_Yokohama.jpg",
+				title: "Mikasa",
+				lat: 35.285225496055794,
+				long: 139.67435824746588
 			},
 			{
 				id: 9,
 				src: "img/main-qimg-5052ea1fb9f097167cee4763009d5f06.jfif",
 				//title: "United States'. Апошні ўладальнік 'Блакітнай стужкі",
 				title: "United States",
-				lat: 65.15,
-				long: 18.25
+				lat: 39.91853499023072,
+				long: -75.13661747002956
 			},
 		];
     }
