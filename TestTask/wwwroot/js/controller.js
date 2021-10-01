@@ -8,6 +8,7 @@ class Controller {
 
         this.handlers = {
             'SelectImage': (id) => this.editImage(id),
+            'EditDescription': (id, descr) => this.editDescr(id, descr),
         };
     }
 
@@ -20,6 +21,14 @@ class Controller {
         const item = this.model.read(id);
         if (item) {
             this.view.editImage(item, this.handlers);
+        }
+    }
+
+    editDescr(id, descr) {
+        const item = this.model.read(id);
+        if (item) {
+            item.descr = descr;
+            this.model.update(id, item);
         }
     }
 }
