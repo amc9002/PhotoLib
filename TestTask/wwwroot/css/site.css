@@ -4,24 +4,25 @@ html {
 
 body {
     height: 100%;
-    border: 1px;
-    border-color: magenta;
 }
 
-/*div {
-    border: 1px solid magenta !important;
-}*/
+.row {
+    border: 2px dotted red;
+    overflow: auto;
+    margin: 5px;
+}
 
-.row-scrollbar {
-    flex: 1;
+.row-gallery {
+    height: 150px;
 }
 
 .row-details {
-    height: 600px;
+    flex: 3;
 }
 
 .row-description {
-    flex: 1;
+    flex: 2;
+    width: 800px;
 }
 
 .row-upload {
@@ -38,35 +39,56 @@ body {
 }
 
 .ImageList .item {
-    height: 200px;
-    width: 200px;
+    height: 100%;
     display: inline-block;
     margin: 0 10px;
 }
 
 .ImageList .item img {
-    max-height: 200px;
-    max-width: 200px;
-    margin-left: auto;
-    margin-right: auto;
-    display: block;
+    height: 100%;
+    width: 100%;
 }
 
-.Title {
-    font-weight: bold;
+.CurrentImage {
+    border: 2px dotted blue;
+    height: 100%;
 }
 
 .BigImage {
-    max-height: 400px;
-    max-width: 400px;
+    max-height: 100%;
+    max-width: 100%;
+}
+
+.Exif {
+    font-size: 14pt;
+}
+
+/*.row-description {
+    border: 1px;
+    border-color: blue;
+    font-size: 14pt;
+}*/
+
+.Gmap iframe {
+    width: 100%;
+    height: 100%;
 }
 
 .Descr {
-    height: 300px;
-    max-width: 500px;
+    /*height: 100%;*/
 }
 
 .Descr textarea {
-    height: 100px;
-    width: 200px;
- }    
+    /*height: 100%;*/
+    /*width: 100%;*/
+    /*max-width: 300px;*/
+}    
+
+.Btn {
+    border: 1px solid black;
+}
+
+.Btn:hover {
+    font-weight: bold;
+    border: 2px solid black;
+}
