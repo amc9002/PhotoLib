@@ -1,8 +1,9 @@
-<html>
+﻿<html>
 <head>
     <meta charset="utf-8">
     <link href="http://maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
     <link href="css/site.css" rel="stylesheet">
+    <link href="lib/simplemende/simplemde.min.css" rel="stylesheet">
 
     <script src="http://maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
     <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
@@ -21,13 +22,16 @@
 
                 <!--Google map-->
                 <div class="col-5 Gmap"  map-container>
-                    <iframe width="580" height="580" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src=""></iframe>
+                    <iframe width="400" height="400" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src=""></iframe>
                 </div>
                 <!--Google Maps-->
             </div>
 
             <div class="row d-flex row-description">
-                <div class="col Descr">description here</div>
+                <div class="col Descr">
+                    <textarea>description here</textarea>
+                </div>
+                <span><button class="Btn">Save</button></span>
             </div>
 
             <div class="row row-upload">
@@ -41,6 +45,7 @@
             </div>
         </div>
 
+        <script src="lib/simplemende/simplemde.min.js"></script>
         <script src="js/model.js"></script>
         <script src="js/view.js"></script>
         <script src="js/controller.js"></script>
