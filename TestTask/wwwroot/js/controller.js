@@ -9,6 +9,7 @@ class Controller {
         this.handlers = {
             'SelectImage': (id) => this.editImage(id),
             'EditDescription': (id, descr) => this.editDescr(id, descr),
+            'UploadFile': () => this.uploadFile(),
         };
     }
 
@@ -30,5 +31,15 @@ class Controller {
             item.descr = descr;
             this.model.update(id, item);
         }
+    }
+
+    async uploadFile() {
+        let formData = new FormData();
+        formData.append("file", fileupload.files[0]);
+        await fetch(' /index.html ', {
+            method: " POST ",
+            body: formData
+        });
+        alert('The file has been uploaded successfully.');
     }
 }

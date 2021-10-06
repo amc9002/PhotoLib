@@ -75,7 +75,8 @@ body {
 }
 
 .Descr {
-    /*height: 100%;*/
+    border: 1px solid black;
+    text-align: left;
 }
 
 .Descr textarea {
@@ -88,7 +89,7 @@ body {
     border: 1px solid black;
 }
 
-.Btn:hover {
+/*.Btn:hover {
     font-weight: bold;
     border: 2px solid black;
-}
+}*/

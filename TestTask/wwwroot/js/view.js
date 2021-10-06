@@ -15,7 +15,17 @@ class View {
                 spellChecker: false,
                 status: false
             });
-        this.$btn = $('.Btn');
+        this.$btnSave = $('.Save');
+        this.$btnUpload = $('.Upload');
+    }
+
+    bind(handlers) {
+        //bind the 'UploadFile' event
+        const handler = handlers['UploadFile'];
+        this.$btnUpload.off('click');
+        this.$btnUpload.on('click', (e) => {
+            handler();
+        });
     }
 
     showImages(data, handlers) {
@@ -49,18 +59,16 @@ class View {
         let mapUrl = `http://maps.google.com/maps?z=${zoomLevel}&t=k&q=loc:${item.lat}+${item.long}&output=embed`;
         this.$iframe.attr('src', mapUrl);
         this.$simplemde.value(item.descr);
-        this.$btn.attr('data-id', item.id);
+        this.$btnSave.attr('data-id', item.id);
 
         // bind the 'EditDescription' event
         const handler = handlers['EditDescription'];
-        this.$btn.off('click');
-        this.$btn.on('click', (e) => {
+        this.$btnSave.off('click');
+        this.$btnSave.on('click', (e) => {
             const id = $(e.currentTarget).attr('data-id');
             handler(id, this.$simplemde.value());
         });
-
-        
-
-        console.log(mapUrl);
     }
+
+
 }
