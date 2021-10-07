@@ -17,6 +17,7 @@ class View {
             });
         this.$btnSave = $('.Save');
         this.$btnUpload = $('.Upload');
+        this.fileupload = $('.custom-file-input');
     }
 
     bind(handlers) {
@@ -24,7 +25,7 @@ class View {
         const handler = handlers['UploadFile'];
         this.$btnUpload.off('click');
         this.$btnUpload.on('click', (e) => {
-            handler();
+            handler(this.fileupload[0]);
         });
     }
 

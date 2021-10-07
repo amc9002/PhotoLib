@@ -9,11 +9,12 @@ class Controller {
         this.handlers = {
             'SelectImage': (id) => this.editImage(id),
             'EditDescription': (id, descr) => this.editDescr(id, descr),
-            'UploadFile': () => this.uploadFile(),
+            'UploadFile': (fileupload) => this.uploadFile(fileupload),
         };
     }
 
     showAll() {
+        this.view.bind(this.handlers);
         const data = this.model.read();
         this.view.showImages(data, this.handlers);
     }
@@ -33,13 +34,20 @@ class Controller {
         }
     }
 
-    async uploadFile() {
+    async uploadFile(fileupload) {
         let formData = new FormData();
         formData.append("file", fileupload.files[0]);
-        await fetch(' /index.html ', {
-            method: " POST ",
-            body: formData
-        });
-        alert('The file has been uploaded successfully.');
+        if (window.location.origin !== 'file://') {
+            await fetch(' /index.html ', {
+                method: " POST ",
+                body: formData
+            });
+        }
+        else {
+            this.model.createFake(fileupload.files[0].name);
+        }
+        alert(`The file ${fileupload.files[0].name} has been uploaded successfully.`);
+
+        this.showAll();
     }
 }

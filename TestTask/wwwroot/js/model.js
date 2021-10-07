@@ -84,12 +84,12 @@ class Model {
         this.storage.save(newItem, callback);
     }
 
-    createFake() {
-        const rnd = Date.now();
+    createFake(name) {
+        const id = Date.now();
         this.data.push({
-            id: rnd,
-            src: `img/ file_${rnd}.jpg`,
-            descr: `File ${rnd}`,
+            id: id,
+            src: `img / ${name}`,
+            descr: `File ${name}`,
             lat: Math.random() * 180.0 - 90.0,
             long: Math.random() * 360.0 - 180.0
         });
