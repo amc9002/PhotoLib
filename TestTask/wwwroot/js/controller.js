@@ -37,6 +37,7 @@ class Controller {
     async uploadFile(fileupload) {
         let formData = new FormData();
         formData.append("file", fileupload.files[0]);
+
         if (window.location.origin !== 'file://') {
             await fetch(' /index.html ', {
                 method: " POST ",

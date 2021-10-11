@@ -7,7 +7,7 @@ body {
 }
 
 .row {
-    border: 2px dotted red;
+    /*border: 2px dotted red;*/
     overflow: auto;
     margin: 5px;
 }
@@ -50,7 +50,7 @@ body {
 }
 
 .CurrentImage {
-    border: 2px dotted blue;
+    /*border: 2px dotted blue;*/
     height: 100%;
 }
 
@@ -79,11 +79,10 @@ body {
     text-align: left;
 }
 
-.Descr textarea {
-    /*height: 100%;*/
-    /*width: 100%;*/
-    /*max-width: 300px;*/
-}    
+.Descr .CodeMirror {
+    min-height: 0;
+    height: calc(100% - 51px);
+}  
 
 .Btn {
     border: 1px solid black;

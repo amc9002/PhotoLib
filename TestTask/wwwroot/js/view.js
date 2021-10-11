@@ -17,7 +17,7 @@ class View {
             });
         this.$btnSave = $('.Save');
         this.$btnUpload = $('.Upload');
-        this.fileupload = $('.custom-file-input');
+        this.$fileupload = $('.custom-file-input');
     }
 
     bind(handlers) {
@@ -25,7 +25,13 @@ class View {
         const handler = handlers['UploadFile'];
         this.$btnUpload.off('click');
         this.$btnUpload.on('click', (e) => {
-            handler(this.fileupload[0]);
+            handler(this.$fileupload[0]);
+        });
+
+        //bind the 'ShowFileName' event
+        $('input[type="file"]').change(function (e) {
+            var fileName = e.target.files[0].name;
+            $('.custom-file-label').html(fileName);
         });
     }
 
