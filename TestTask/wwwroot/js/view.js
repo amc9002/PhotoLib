@@ -63,7 +63,7 @@ class View {
         this.$exif.html(exif);
 
         var zoomLevel = 17;
-        let mapUrl = `http://maps.google.com/maps?z=${zoomLevel}&t=k&q=loc:${item.lat}+${item.long}&output=embed`;
+        let mapUrl = `https://maps.google.com/maps?z=${zoomLevel}&t=k&q=loc:${item.lat}+${item.long}&output=embed`;
         this.$iframe.attr('src', mapUrl);
         this.$simplemde.value(item.descr);
         this.$btnSave.attr('data-id', item.id);

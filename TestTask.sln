@@ -11,6 +11,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		TestTask\wwwroot\lib\simplemde\simplemde.min.js = TestTask\wwwroot\lib\simplemde\simplemde.min.js
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TodoApi", "TodoApi\TodoApi.csproj", "{443322B8-1039-4B0D-87C5-5189F0CC7CC6}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{485672C1-1017-4C0E-9ECA-68F25F62F06F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{485672C1-1017-4C0E-9ECA-68F25F62F06F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{485672C1-1017-4C0E-9ECA-68F25F62F06F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{443322B8-1039-4B0D-87C5-5189F0CC7CC6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{443322B8-1039-4B0D-87C5-5189F0CC7CC6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{443322B8-1039-4B0D-87C5-5189F0CC7CC6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{443322B8-1039-4B0D-87C5-5189F0CC7CC6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
