@@ -1,4 +1,4 @@
-﻿namespace TodoApi.Models
+﻿namespace TestTask.Models
 {
     public class TodoItem
     {
