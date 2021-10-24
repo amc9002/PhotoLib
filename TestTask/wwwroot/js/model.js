@@ -96,13 +96,16 @@ class Model {
     }
 
 
-    read(id) {
-        if (typeof id === 'undefined') {
-            return this.data;
+    read(id, callback) {
+
+        let url = `${document.location.href}testtask`;
+        if (id !== null) {
+            url += `/${id}`;
         }
-        else {
-            return this.data.find((x) => x.id.toString() === id.toString());
-        }
+
+        fetch(url)
+            .then(response => response.json())
+            .then(data => callback(data));
     }
 
     update(id, item) {

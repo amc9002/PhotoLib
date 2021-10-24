@@ -1,24 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
 namespace TestTask.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("[TestTask]")]
     public class TestTaskController : ControllerBase
     {
         private readonly ILogger<TestTaskController> _logger;
-
-        public TestTaskController(ILogger<TestTaskController> logger)
-        {
-            _logger = logger;
-        }
-        [HttpGet]
-        public IEnumerable<FakeData> Get()
-        {
-            List<FakeData> DataList = new List<FakeData>() {
+        private List<FakeData> DataList = new List<FakeData>() {
                 new FakeData {
                     Id = 1,
                     Src = "img/nintchdbpict000177689785.jpg",
@@ -84,7 +75,25 @@ namespace TestTask.Controllers
                 }
             };
 
-            return DataList.ToArray();
+        public TestTaskController(ILogger<TestTaskController> logger)
+        {
+            _logger = logger;
+        }
+        [HttpGet("{Id}")]
+        public IEnumerable<FakeData> Get()
+        { 
+            return this.DataList.ToArray();
+        }
+
+        public FakeData Get(long id)
+        {
+            foreach(var d in this.DataList)
+            {
+                if (d.Id == id)
+                    return d;
+            }
+
+            return null;
         }
     }
 }

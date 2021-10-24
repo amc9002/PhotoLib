@@ -15,16 +15,20 @@ class Controller {
 
     showAll() {
         this.view.bind(this.handlers);
-        const data = this.model.read();
-        this.view.showImages(data, this.handlers);
+
+        const callback = (data) => this.view.showImages(data, this.handlers);
+        this.model.read(null, callback);
     }
 
     editImage(id) {
-        const item = this.model.read(id);
-        if (item) {
-            this.view.editImage(item, this.handlers);
-        }
+        const callback = function (item) {
+            if (item) {
+                this.view.editImage(item, this.handlers);
+            }
+        };
+        this.model.read(id, callback);
     }
+
 
     editDescr(id, descr) {
         const item = this.model.read(id);
