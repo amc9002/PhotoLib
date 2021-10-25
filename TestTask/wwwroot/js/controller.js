@@ -21,12 +21,11 @@ class Controller {
     }
 
     editImage(id) {
-        const callback = function (item) {
+        callback = (item) => {
             if (item) {
                 this.view.editImage(item, this.handlers);
             }
-        };
-        this.model.read(id, callback);
+            this.model.read(id, callback);
     }
 
 

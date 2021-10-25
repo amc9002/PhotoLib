@@ -5,7 +5,7 @@ using Microsoft.Extensions.Logging;
 namespace TestTask.Controllers
 {
     [ApiController]
-    [Route("[TestTask]")]
+    [Route("[controller]")]
     public class TestTaskController : ControllerBase
     {
         private readonly ILogger<TestTaskController> _logger;
@@ -79,19 +79,18 @@ namespace TestTask.Controllers
         {
             _logger = logger;
         }
-        [HttpGet("{Id}")]
+
+        [HttpGet]
         public IEnumerable<FakeData> Get()
-        { 
+        {
             return this.DataList.ToArray();
         }
 
+        [HttpGet("{id}")]
         public FakeData Get(long id)
         {
-            foreach(var d in this.DataList)
-            {
-                if (d.Id == id)
-                    return d;
-            }
+            foreach(var d in DataList)
+                if (id == d.Id) return d;
 
             return null;
         }
