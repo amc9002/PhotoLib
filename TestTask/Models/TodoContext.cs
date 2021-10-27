@@ -9,6 +9,6 @@ namespace TestTask.Models
         {
         }
 
-        public DbSet<TodoItem> TodoItems { get; set; }
+        public DbSet<Image> TodoItems { get; set; }
     }
 }

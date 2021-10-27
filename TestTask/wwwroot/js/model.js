@@ -63,12 +63,13 @@ class Model {
             {
                 id: 9,
                 src: "img/main-qimg-5052ea1fb9f097167cee4763009d5f06.jfif",
-                //descr: "United States'. Апошні ўладальнік 'Блакітнай стужкі",
                 descr: "United States",
                 lat: 39.91853499023072,
                 long: -75.13661747002956
             },
         ];
+
+        this.image = image;
     }
 
 
@@ -96,6 +97,7 @@ class Model {
     }
 
 
+
     read(id, callback) {
 
         let url = `${document.location.href}testtask`;
@@ -104,7 +106,10 @@ class Model {
         }
 
         fetch(url)
-            .then(response => response.json())
+            .then(response => {
+                const obj = response.json();
+                return (id !== null) ? Image.fromGenericObject(obj) : obj.map((ob) => Image.fromGenericObject(ob));
+            })
             .then(data => callback(data));
     }
 
