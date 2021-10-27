@@ -1,7 +1,7 @@
 'use strict';
 
 class Model {
-    constructor() {
+    constructor(image) {
         // fake data
         this.data = [
             {
@@ -68,8 +68,6 @@ class Model {
                 long: -75.13661747002956
             },
         ];
-
-        this.image = image;
     }
 
 
@@ -106,11 +104,11 @@ class Model {
         }
 
         fetch(url)
-            .then(response => {
-                const obj = response.json();
-                return (id !== null) ? Image.fromGenericObject(obj) : obj.map((ob) => Image.fromGenericObject(ob));
+            .then(response => response.json())
+            .then(data => {
+                const obj = (id !== null) ? Image.fromGenericObject(data) : data.map((ob) => Image.fromGenericObject(ob));
+                callback(obj);
             })
-            .then(data => callback(data));
     }
 
     update(id, item) {
