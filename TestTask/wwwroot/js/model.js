@@ -98,17 +98,31 @@ class Model {
 
     read(id, callback) {
 
-        let url = `${document.location.href}testtask`;
-        if (id !== null) {
-            url += `/${id}`;
+        if (document.location.href.indexOf(`github.io`) !== -1 
+            || window.location.origin === `file://`) {
+
+            var obj;
+            if (id === null) obj = this.data;
+            else obj = this.data.find(d => d.id === id);
+
+            callback(obj);
+        }
+        else {
+            let url = `${document.location.href}testtask`;
+            if (id !== null) {
+                url += `/${id}`;
+            }
+
+            fetch(url)
+                .then(response => response.json())
+                .then(data => {
+                    const obj = (id !== null) ? Image.fromGenericObject(data) : data.map((ob) => Image.fromGenericObject(ob));
+                    callback(obj);
+                })
         }
 
-        fetch(url)
-            .then(response => response.json())
-            .then(data => {
-                const obj = (id !== null) ? Image.fromGenericObject(data) : data.map((ob) => Image.fromGenericObject(ob));
-                callback(obj);
-            })
+
+
     }
 
     update(id, item) {
