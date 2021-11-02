@@ -70,7 +70,6 @@ class Model {
         ];
     }
 
-
     create(descr, callback) {
         descr = descr || '';
         callback = callback || function () { };
@@ -94,11 +93,9 @@ class Model {
         });
     }
 
-
-
     read(id, callback) {
 
-        if (document.location.href.indexOf(`github.io`) !== -1 
+        if (document.location.href.indexOf(`github.io`) !== -1
             || window.location.origin === `file://`) {
 
             var obj;
@@ -113,23 +110,36 @@ class Model {
                 url += `/${id}`;
             }
 
-            fetch(url)
+            fetch(url, callback)
                 .then(response => response.json())
                 .then(data => {
                     const obj = (id !== null) ? Image.fromGenericObject(data) : data.map((ob) => Image.fromGenericObject(ob));
                     callback(obj);
-                })
+                });
         }
-
-
-
     }
 
     update(id, item) {
-        var index = this.data.findIndex(x => x.id.toString() === id.toString());
-        if (index !== -1) {
-            this.data[index] = item;
+        if (document.location.href.indexOf(`github.io`) !== -1
+            || window.location.origin === `file://`) {
+
+            var index = this.data.findIndex(x => x.id.toString() === id.toString());
+            if (index !== -1) {
+                this.data[index] = item;
+            }
         }
+        else {
+            let url = `${document.location.href}testtask` + `/${id}`;
+            fetch(url, {
+                method: 'PUT',
+                cache: 'no-cache',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(item)
+            });
+        }
+
     }
 
     delete(id, callback) {

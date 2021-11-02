@@ -1,4 +1,8 @@
 ﻿using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
@@ -93,6 +97,67 @@ namespace TestTask.Controllers
                 if (id == d.Id) return d;
 
             return null;
+        }
+
+        [HttpPut("{id, updatedImage}")]
+        //public async Task<IActionResult> PutImage(long id, Image updatedImage)
+        public IActionResult PutImage(long id, Image updatedImage)
+        {
+            if (id != updatedImage.Id)
+            {
+                return BadRequest();
+            }
+
+            int indexOfImage = DataList.FindIndex(d => d.Id == id);
+            DataList[indexOfImage] = updatedImage;
+
+            #region About context
+            //_context.Entry(img).State = EntityState.Modified;
+
+            //try
+            //{
+            //    await _context.SaveChangesAsync();
+            //}
+            //catch (DbUpdateConcurrencyException)
+            //{
+            //    if (!TodoItemExists(id))
+            //    {
+            //        return NotFound();
+            //    }
+            //    else
+            //    {
+            //        throw;
+            //    }
+            //}
+            #endregion
+            
+            return NoContent();
+
+        }
+
+        [HttpPost("UploadFiles")]
+        public async Task<IActionResult> Post(List<IFormFile> files)
+        {
+            long size = files.Sum(f => f.Length);
+
+            // full path to file in temp location
+            var filePath = Path.GetTempFileName();
+
+            foreach (var formFile in files)
+            {
+                if (formFile.Length > 0)
+                {
+                    using var stream = new FileStream(filePath, FileMode.Create);
+                    await formFile.CopyToAsync(stream);
+                }
+            }
+
+            // process uploaded files
+            // Don't rely on or trust the FileName property without validation.
+
+
+
+            return Ok(new { count = files.Count, size, filePath });
         }
     }
 }

@@ -32,11 +32,13 @@ class Controller {
 
 
     editDescr(id, descr) {
-        const item = this.model.read(id);
-        if (item) {
-            item.descr = descr;
-            this.model.update(id, item);
+        const callback = (item) => {
+            if (item) {
+                item.descr = descr;
+                this.model.update(id, item);
+            }
         }
+        this.model.read(id, callback);
     }
 
     async uploadFile(fileupload) {
