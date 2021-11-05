@@ -70,16 +70,26 @@ class Model {
         ];
     }
 
-    create(descr, callback) {
-        descr = descr || '';
-        callback = callback || function () { };
 
-        var newItem = {
-            descr: descr.trim(),
-            completed: false
-        };
 
-        this.storage.save(newItem, callback);
+
+    create(data, callback) {
+        if (document.location.href.indexOf(`github.io`) !== -1
+            || window.location.origin === `file://`) {
+
+            this.createFake(data.get(`NewFile`).name);
+            callback();
+        }
+        else {
+            let url = `${document.location.href}testtask`;
+            fetch(url, {
+                method: 'POST',
+                cache: 'no-cache',
+                body: data
+            })
+                .then(response => response.json())
+                .then(data => callback(data));
+        }
     }
 
     createFake(name) {
@@ -118,6 +128,8 @@ class Model {
                 });
         }
     }
+
+
 
     update(id, item) {
         if (document.location.href.indexOf(`github.io`) !== -1

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
@@ -13,7 +14,7 @@ namespace TestTask.Controllers
     public class TestTaskController : ControllerBase
     {
         private readonly ILogger<TestTaskController> _logger;
-        private List<Image> DataList = new List<Image>() {
+        private static List<Image> DataList = new List<Image>() {
                 new Image {
                     Id = 1,
                     Src = "img/nintchdbpict000177689785.jpg",
@@ -87,19 +88,19 @@ namespace TestTask.Controllers
         [HttpGet]
         public IEnumerable<Image> Get()
         {
-            return this.DataList.ToArray();
+            return DataList.ToArray();
         }
 
         [HttpGet("{id}")]
         public Image Get(long id)
         {
-            foreach(var d in DataList)
+            foreach (var d in DataList)
                 if (id == d.Id) return d;
 
             return null;
         }
 
-        [HttpPut("{id, updatedImage}")]
+        [HttpPut("{id}")]
         //public async Task<IActionResult> PutImage(long id, Image updatedImage)
         public IActionResult PutImage(long id, Image updatedImage)
         {
@@ -130,34 +131,63 @@ namespace TestTask.Controllers
             //    }
             //}
             #endregion
-            
+
             return NoContent();
 
         }
 
-        [HttpPost("UploadFiles")]
-        public async Task<IActionResult> Post(List<IFormFile> files)
+        [HttpPost]
+        public Image Post(IFormFile file)
         {
-            long size = files.Sum(f => f.Length);
-
-            // full path to file in temp location
-            var filePath = Path.GetTempFileName();
-
-            foreach (var formFile in files)
+            
+            /*var filePath = Path.GetTempFileName();*/
+            string src = null;
+            if (file.Length > 0)
             {
-                if (formFile.Length > 0)
+
+                using (var ms = new MemoryStream())
                 {
-                    using var stream = new FileStream(filePath, FileMode.Create);
-                    await formFile.CopyToAsync(stream);
+                    file.CopyTo(ms);
+                    var fileBytes = ms.ToArray();
+                    src = "data:" + file.ContentType + ";base64," + Convert.ToBase64String(fileBytes);
                 }
+
+                var img = new Image();
+                img.Id = DataList.Count + 1;
+                img.Src = src;
+                img.Descr = "Something";
+                img.Lat = 12345;
+                img.Long = 67890;
+
+                DataList.Add(img);
+
+                return img;
             }
 
-            // process uploaded files
-            // Don't rely on or trust the FileName property without validation.
-
-
-
-            return Ok(new { count = files.Count, size, filePath });
+            return null;
         }
+
+        //[HttpPost("UploadFiles")]
+        //public async Task<IActionResult> Post(List<IFormFile> files)
+        //{
+        //    long size = files.Sum(f => f.Length);
+
+        //    // full path to file in temp location
+        //    var filePath = Path.GetTempFileName();
+
+        //    foreach (var formFile in files)
+        //    {
+        //        if (formFile.Length > 0)
+        //        {
+        //            using var stream = new FileStream(filePath, FileMode.Create);
+        //            await formFile.CopyToAsync(stream);
+        //        }
+        //    }
+
+        //    // process uploaded files
+        //    // Don't rely on or trust the FileName property without validation.
+
+        //    return Ok(new { count = files.Count, size, filePath });
+        //}
     }
 }

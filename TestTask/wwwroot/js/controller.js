@@ -41,21 +41,17 @@ class Controller {
         this.model.read(id, callback);
     }
 
-    async uploadFile(fileupload) {
-        let formData = new FormData();
-        formData.append("file", fileupload.files[0]);
+    uploadFile(fileupload) {
 
-        if (window.location.origin !== 'file://') {
-            await fetch(' /index.html ', {
-                method: " POST ",
-                body: formData
-            });
-        }
-        else {
-            this.model.createFake(fileupload.files[0].name);
-        }
-        alert(`The file ${fileupload.files[0].name} has been uploaded successfully.`);
+        const callback = (itemImg) => {
+            alert(`The file ${ fileupload.files[0].name } has been uploaded successfully.`);
+            this.showAll();
+            this.view.editImage(itemImg, this.handlers);
+        };
 
-        this.showAll();
+        const data = new FormData();
+        data.append("file", fileupload.files[0]);
+
+        this.model.create(data, callback);
     }
 }
