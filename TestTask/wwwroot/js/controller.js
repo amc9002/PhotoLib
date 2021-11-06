@@ -10,7 +10,22 @@ class Controller {
             'SelectImage': (id) => this.editImage(id),
             'EditDescription': (id, descr) => this.editDescr(id, descr),
             'UploadFile': (fileupload) => this.uploadFile(fileupload),
+            'DeleteImage': (id) => this.deleteImage(id),
         };
+    }
+
+    uploadFile(fileupload) {
+
+        const callback = (itemImg) => {
+            alert(`The file ${fileupload.files[0].name} has been uploaded successfully.`);
+            this.showAll();
+            this.view.editImage(itemImg, this.handlers);
+        };
+
+        const data = new FormData();
+        data.append("file", fileupload.files[0]);
+
+        this.model.create(data, callback);
     }
 
     showAll() {
@@ -41,17 +56,11 @@ class Controller {
         this.model.read(id, callback);
     }
 
-    uploadFile(fileupload) {
-
-        const callback = (itemImg) => {
-            alert(`The file ${ fileupload.files[0].name } has been uploaded successfully.`);
-            this.showAll();
-            this.view.editImage(itemImg, this.handlers);
-        };
-
-        const data = new FormData();
-        data.append("file", fileupload.files[0]);
-
-        this.model.create(data, callback);
+    deleteImage(id) {
+        const callback = () => { this.showAll(); }
+        var result = confirm("Are you sure?");
+        if (result)
+            this.model.delete(id, callback);
     }
+
 }

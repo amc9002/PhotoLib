@@ -155,6 +155,21 @@ class Model {
     }
 
     delete(id, callback) {
-        this.storage.delete(id, callback);
+        if (document.location.href.indexOf(`github.io`) !== -1
+            || window.location.origin === `file://`) {
+
+            this.data.delete(d => d.id == id);
+            callback();
+        }
+        else {
+            let url = `${document.location.href}testtask` + `/${id}`;
+            fetch(url, {
+                method: 'DELETE',
+                cache: 'no-cache'
+            })
+                .then(response => response.json())
+                .then(callback());   
+        }
+
     }
 }

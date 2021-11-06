@@ -16,6 +16,7 @@ class View {
                 status: false
             });
         this.$btnSave = $('.Save');
+        this.$btnDelete = $(`.DeleteImage`);
         this.$btnUpload = $('.Upload');
         this.$fileupload = $('.custom-file-input');
     }
@@ -61,19 +62,30 @@ class View {
 
         let exif = ` lat "${item.lat}" <br> long "${item.long}" `;
         this.$exif.html(exif);
+        html = `<button class="Btn Delete">Delete image</button>`;
+        this.$btnDelete.html(html);
 
         var zoomLevel = 17;
         let mapUrl = `https://maps.google.com/maps?z=${zoomLevel}&t=k&q=loc:${item.lat}+${item.long}&output=embed`;
         this.$iframe.attr('src', mapUrl);
         this.$simplemde.value(item.descr);
         this.$btnSave.attr('data-id', item.id);
+        this.$btnDelete.attr('data-id', item.id);
 
         // bind the 'EditDescription' event
-        const handler = handlers['EditDescription'];
+        const handlerEdit = handlers['EditDescription'];
         this.$btnSave.off('click');
         this.$btnSave.on('click', (e) => {
             const id = $(e.currentTarget).attr('data-id');
-            handler(id, this.$simplemde.value());
+            handlerEdit(id, this.$simplemde.value());
+        });
+
+        // bind the 'DeleteImage' event
+        const handlerDelete = handlers['DeleteImage'];
+        this.$btnDelete.off('click');
+        this.$btnDelete.on('click', (e) => {
+            const id = $(e.currentTarget).attr('data-id');
+            handlerDelete(id);
         });
     }
 

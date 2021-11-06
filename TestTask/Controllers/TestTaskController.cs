@@ -85,61 +85,10 @@ namespace TestTask.Controllers
             _logger = logger;
         }
 
-        [HttpGet]
-        public IEnumerable<Image> Get()
-        {
-            return DataList.ToArray();
-        }
-
-        [HttpGet("{id}")]
-        public Image Get(long id)
-        {
-            foreach (var d in DataList)
-                if (id == d.Id) return d;
-
-            return null;
-        }
-
-        [HttpPut("{id}")]
-        //public async Task<IActionResult> PutImage(long id, Image updatedImage)
-        public IActionResult PutImage(long id, Image updatedImage)
-        {
-            if (id != updatedImage.Id)
-            {
-                return BadRequest();
-            }
-
-            int indexOfImage = DataList.FindIndex(d => d.Id == id);
-            DataList[indexOfImage] = updatedImage;
-
-            #region About context
-            //_context.Entry(img).State = EntityState.Modified;
-
-            //try
-            //{
-            //    await _context.SaveChangesAsync();
-            //}
-            //catch (DbUpdateConcurrencyException)
-            //{
-            //    if (!TodoItemExists(id))
-            //    {
-            //        return NotFound();
-            //    }
-            //    else
-            //    {
-            //        throw;
-            //    }
-            //}
-            #endregion
-
-            return NoContent();
-
-        }
-
         [HttpPost]
         public Image Post(IFormFile file)
         {
-            
+
             /*var filePath = Path.GetTempFileName();*/
             string src = null;
             if (file.Length > 0)
@@ -167,27 +116,49 @@ namespace TestTask.Controllers
             return null;
         }
 
-        //[HttpPost("UploadFiles")]
-        //public async Task<IActionResult> Post(List<IFormFile> files)
-        //{
-        //    long size = files.Sum(f => f.Length);
+        [HttpGet]
+        public IEnumerable<Image> Get()
+        {
+            return DataList.ToArray();
+        }
 
-        //    // full path to file in temp location
-        //    var filePath = Path.GetTempFileName();
+        [HttpGet("{id}")]
+        public Image Get(long id)
+        {
+            foreach (var d in DataList)
+                if (id == d.Id) return d;
 
-        //    foreach (var formFile in files)
-        //    {
-        //        if (formFile.Length > 0)
-        //        {
-        //            using var stream = new FileStream(filePath, FileMode.Create);
-        //            await formFile.CopyToAsync(stream);
-        //        }
-        //    }
+            return null;
+        }
 
-        //    // process uploaded files
-        //    // Don't rely on or trust the FileName property without validation.
+        [HttpPut("{id}")]
+        public IActionResult Put(long id, Image updatedImage)
+        {
+            if (id != updatedImage.Id)
+            {
+                return BadRequest();
+            }
 
-        //    return Ok(new { count = files.Count, size, filePath });
-        //}
+            int indexOfImage = DataList.FindIndex(d => d.Id == id);
+            DataList[indexOfImage] = updatedImage;
+
+            return NoContent();
+
+        }
+
+        [HttpDelete("{id}")]
+        public IActionResult Delete(long id)
+        {
+            foreach (var d in DataList)
+            {
+                if (d.Id == id)
+                {
+                    DataList.Remove(d);
+                    return NoContent();
+                }
+            }
+
+            return NotFound();
+        }
     }
 }
