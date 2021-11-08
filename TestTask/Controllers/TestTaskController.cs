@@ -119,6 +119,7 @@ namespace TestTask.Controllers
         [HttpGet]
         public IEnumerable<Image> Get()
         {
+            Console.WriteLine("Get() started");
             return DataList.ToArray();
         }
 
@@ -149,6 +150,7 @@ namespace TestTask.Controllers
         [HttpDelete("{id}")]
         public IActionResult Delete(long id)
         {
+            Console.WriteLine("Delete() started");
             foreach (var d in DataList)
             {
                 if (d.Id == id)

@@ -167,8 +167,7 @@ class Model {
                 method: 'DELETE',
                 cache: 'no-cache'
             })
-                .then(response => response.json())
-                .then(callback());   
+                .then(() => callback());   
         }
 
     }
