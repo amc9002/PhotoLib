@@ -27,7 +27,7 @@ namespace TestTask
         {
             services.AddControllersWithViews();
 
-            services.AddDbContext<TodoContext>(opt => opt.UseInMemoryDatabase("TodoList"));
+            services.AddDbContext<ImageContext>(opt => opt.UseInMemoryDatabase("TodoList"));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
