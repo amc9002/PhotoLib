@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using TestTask.Models;
 
 namespace TestTask.Controllers
 {
@@ -14,6 +15,7 @@ namespace TestTask.Controllers
     public class TestTaskController : ControllerBase
     {
         private readonly ILogger<TestTaskController> _logger;
+        private readonly ImageContext _context;
         private static List<Image> DataList = new List<Image>() {
                 new Image {
                     Id = 1,
@@ -80,9 +82,10 @@ namespace TestTask.Controllers
                 }
             };
 
-        public TestTaskController(ILogger<TestTaskController> logger)
+        public TestTaskController(ILogger<TestTaskController> logger, ImageContext context)
         {
             _logger = logger;
+            _context = context;
         }
 
         [HttpPost]
@@ -119,17 +122,21 @@ namespace TestTask.Controllers
         [HttpGet]
         public IEnumerable<Image> Get()
         {
-            Console.WriteLine("Get() started");
-            return DataList.ToArray();
+            //Console.WriteLine("Get() started");
+            //return DataList.ToArray();
+            return _context.Images.ToArray();
         }
 
         [HttpGet("{id}")]
         public Image Get(long id)
         {
-            foreach (var d in DataList)
-                if (id == d.Id) return d;
+            //foreach (var d in DataList)
+            //    if (id == d.Id) return d;
 
-            return null;
+            //return null;
+            return _context.Images
+                .Where(x => x.Id == id)
+                .FirstOrDefault();
         }
 
         [HttpPut("{id}")]

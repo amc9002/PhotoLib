@@ -27,7 +27,7 @@ namespace TestTask
         {
             services.AddControllersWithViews();
 
-            services.AddDbContext<ImageContext>(opt => opt.UseInMemoryDatabase("TodoList"));
+            services.AddDbContext<ImageContext>(options => options.UseSqlServer(Configuration.GetConnectionString("Default")));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
