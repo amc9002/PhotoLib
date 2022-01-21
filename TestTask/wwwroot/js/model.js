@@ -141,7 +141,7 @@ class Model {
             }
         }
         else {
-            let url = `${document.location.href}testtask` + `/${id}`;
+            let url = `${document.location.href}testtask`;
             fetch(url, {
                 method: 'PUT',
                 cache: 'no-cache',

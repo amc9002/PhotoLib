@@ -130,25 +130,16 @@ namespace TestTask.Controllers
         [HttpGet("{id}")]
         public Image Get(long id)
         {
-            //foreach (var d in DataList)
-            //    if (id == d.Id) return d;
-
-            //return null;
             return _context.Images
                 .Where(x => x.Id == id)
                 .FirstOrDefault();
         }
 
-        [HttpPut("{id}")]
-        public IActionResult Put(long id, Image updatedImage)
+        [HttpPut]
+        public IActionResult Put(Image updatedImage)
         {
-            if (id != updatedImage.Id)
-            {
-                return BadRequest();
-            }
-
-            int indexOfImage = DataList.FindIndex(d => d.Id == id);
-            DataList[indexOfImage] = updatedImage;
+            _context.Images.Update(updatedImage);
+            _context.SaveChanges();
 
             return NoContent();
 
