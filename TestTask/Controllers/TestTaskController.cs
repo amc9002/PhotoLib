@@ -58,7 +58,7 @@ namespace TestTask.Controllers
                     Descr = "Discovery",
                     Lat = 56.45692619861102,
                     Long = -2.9679623365134353
-                },
+                },  
                 new Image {
                     Id = 7,
                     Src = "img/uss-constitution-167366cf2fa4cd30.jpg",
@@ -94,7 +94,7 @@ namespace TestTask.Controllers
 
             /*var filePath = Path.GetTempFileName();*/
             string src = null;
-            if (file.Length > 0)
+            if (file != null && file.Length > 0)
             {
 
                 using (var ms = new MemoryStream())
@@ -105,13 +105,13 @@ namespace TestTask.Controllers
                 }
 
                 var img = new Image();
-                img.Id = DataList.Count + 1;
                 img.Src = src;
                 img.Descr = "Something";
                 img.Lat = 12345;
                 img.Long = 67890;
 
-                DataList.Add(img);
+                _context.Images.Add(img);
+                _context.SaveChanges();
 
                 return img;
             }
@@ -122,8 +122,6 @@ namespace TestTask.Controllers
         [HttpGet]
         public IEnumerable<Image> Get()
         {
-            //Console.WriteLine("Get() started");
-            //return DataList.ToArray();
             return _context.Images.ToArray();
         }
 
@@ -148,15 +146,11 @@ namespace TestTask.Controllers
         [HttpDelete("{id}")]
         public IActionResult Delete(long id)
         {
-            Console.WriteLine("Delete() started");
-            foreach (var d in DataList)
-            {
-                if (d.Id == id)
-                {
-                    DataList.Remove(d);
-                    return NoContent();
-                }
-            }
+
+            _context.Images.Remove(_context.Images
+                .Where(x => x.Id == id)
+                .FirstOrDefault());
+            _context.SaveChanges();
 
             return NotFound();
         }

@@ -52,6 +52,7 @@ class View {
             const id = $(e.currentTarget).data('id');
             handler(id);
         });
+        this.cleanImage();
     }
 
     editImage(item, handlers) {
@@ -89,5 +90,11 @@ class View {
         });
     }
 
+    cleanImage() {
+        this.$currentImage.html("");
+        this.$iframe.attr('src', ``);
+        this.$exif.html("");
+        this.$simplemde.value("");
+    }
 
 }
