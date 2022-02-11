@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using MetadataExtractor;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -58,7 +59,7 @@ namespace TestTask.Controllers
                     Descr = "Discovery",
                     Lat = 56.45692619861102,
                     Long = -2.9679623365134353
-                },  
+                },
                 new Image {
                     Id = 7,
                     Src = "img/uss-constitution-167366cf2fa4cd30.jpg",
@@ -102,6 +103,16 @@ namespace TestTask.Controllers
                     file.CopyTo(ms);
                     var fileBytes = ms.ToArray();
                     src = "data:" + file.ContentType + ";base64," + Convert.ToBase64String(fileBytes);
+
+                    using (var streamForExtractingExif = new MemoryStream(fileBytes))
+                    {
+                        var directories = ImageMetadataReader.ReadMetadata(streamForExtractingExif);
+                        foreach (var directory in directories)
+                        {
+                            foreach (var tag in directory.Tags)
+                                Console.WriteLine($"[{directory.Name}] {tag.Name} = {tag.Description}");
+                        }
+                    }
                 }
 
                 var img = new Image();
@@ -109,6 +120,7 @@ namespace TestTask.Controllers
                 img.Descr = "Something";
                 img.Lat = 12345;
                 img.Long = 67890;
+
 
                 _context.Images.Add(img);
                 _context.SaveChanges();
