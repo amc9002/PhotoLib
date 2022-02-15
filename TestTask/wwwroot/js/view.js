@@ -62,7 +62,9 @@ class View {
         this.$currentImage.html(html);
 
         let exif = ` lat "${item.lat}" <br> long "${item.long}" `;
+        //let exif = JSON.parse(item.exif);
         this.$exif.html(exif);
+
         html = `<button class="Btn Delete">Delete image</button>`;
         this.$btnDelete.html(html);
 

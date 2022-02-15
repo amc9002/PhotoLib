@@ -8,8 +8,9 @@ namespace TestTask
         public string Src { get; set; }
         public byte[] BitImg { get; set; }
         public string Descr { get; set; }
-        public double Lat { get; set; }
-        public double Long { get; set; }
+        public string Exif { get; set; }
+        //public double Lat { get; set; }
+        //public double Long { get; set; }
     } 
 
 }
