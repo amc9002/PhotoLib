@@ -61,8 +61,7 @@ class View {
         let html = `<img class="BigImage" src="${item.src}" />`;
         this.$currentImage.html(html);
 
-        let exif = ` lat "${item.lat}" <br> long "${item.long}" `;
-        //let exif = JSON.parse(item.exif);
+        let exif = ` lat "${item.getExif('GPS', 'GPS Latitude')}" <br> long "${item.getExif('GPS', 'GPS Longitude')}" `;
         this.$exif.html(exif);
 
         html = `<button class="Btn Delete">Delete image</button>`;
@@ -90,6 +89,7 @@ class View {
             const id = $(e.currentTarget).attr('data-id');
             handlerDelete(id);
         });
+
     }
 
     cleanImage() {
@@ -97,6 +97,8 @@ class View {
         this.$iframe.attr('src', ``);
         this.$exif.html("");
         this.$simplemde.value("");
+        this.$fileupload.html("");
     }
 
+    
 }
