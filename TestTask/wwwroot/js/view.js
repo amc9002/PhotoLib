@@ -61,15 +61,25 @@ class View {
         let html = `<img class="BigImage" src="${item.src}" />`;
         this.$currentImage.html(html);
 
-        let exif = ` lat "${item.getExif('GPS', 'GPS Latitude')}" <br> long "${item.getExif('GPS', 'GPS Longitude')}" `;
+        var latitude = item.getExif('GPS', 'GPS Latitude');
+        var refLatitude = item.getExif('GPS', 'GPS Latitude Ref');
+        var longitude = item.getExif('GPS', 'GPS Longitude');
+        var refLongitude = item.getExif('GPS', 'GPS Longitude Ref');
+
+        let exif = ` lat ${latitude}${refLatitude} <br> long ${longitude}${refLongitude} `;
         this.$exif.html(exif);
 
         html = `<button class="Btn Delete">Delete image</button>`;
         this.$btnDelete.html(html);
 
         var zoomLevel = 17;
-        let mapUrl = `https://maps.google.com/maps?z=${zoomLevel}&t=k&q=loc:${item.lat}+${item.long}&output=embed`;
+
+        let latitudeGrad = this.latLongConvert(latitude);
+        let longitudeGrad = this.latLongConvert(longitude);
+
+        let mapUrl = `https://maps.google.com/maps?z=${zoomLevel}&t=k&q=loc:${latitudeGrad}` + ` ` + `${longitudeGrad}&output=embed`;
         this.$iframe.attr('src', mapUrl);
+
         this.$simplemde.value(item.descr);
         this.$btnSave.attr('data-id', item.id);
         this.$btnDelete.attr('data-id', item.id);
@@ -100,5 +110,11 @@ class View {
         this.$fileupload.html("");
     }
 
-    
+    latLongConvert(data) {
+        var dataString = data.replace(/[^0-9,\s]/g, ' ');
+        var dataArray = dataString.split(' ');
+        let convertedData = parseInt(dataArray[0], 10) + parseInt(dataArray[1], 10) / 60 + parseInt(dataArray[2], 10) / 3600;
+        return convertedData;
+    }
+
 }

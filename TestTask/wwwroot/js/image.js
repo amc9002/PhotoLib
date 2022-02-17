@@ -17,27 +17,11 @@ class Image {
     }
 
     getExif(groupName, tagName) {
-
-        var group, data;
-
-        for (let i = 0; i < this.exif.length; i++) {
-            if (this.exif[i].Name === groupName) {
-                group = this.exif[i];
-                for (let j = 0; j < group.Tags.length; j++) {
-                    if (group.Tags[j].TagName === tagName) {
-                        data = group.Tags[j].Description;
-                        return data;
-                    }
-                }
-            }
-        }
-        return "";
+        var group = this.exif.find(g => g.Name === groupName);
+        if (group) {
+            var tag = group.Tags.find(t => t.TagName === tagName);
+            if (tag) return tag.Description;
+        } 
+        return null;
     }
-
-
-    //    return this.exif
-    //        .filter(e => e === groupName)
-    //        .filter(t => t === tagName)
-    //        .filter(key => key === "Description");
-    //}
 }
