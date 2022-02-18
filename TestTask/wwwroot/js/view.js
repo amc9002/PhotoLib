@@ -61,18 +61,12 @@ class View {
         let html = `<img class="BigImage" src="${item.src}" />`;
         this.$currentImage.html(html);
 
-        var latitude = item.getExif('GPS', 'GPS Latitude');
-        var refLatitude = item.getExif('GPS', 'GPS Latitude Ref');
-        var longitude = item.getExif('GPS', 'GPS Longitude');
-        var refLongitude = item.getExif('GPS', 'GPS Longitude Ref');
-
-        let exif = ` lat ${latitude}${refLatitude} <br> long ${longitude}${refLongitude} `;
-        this.$exif.html(exif);
+        this.$exif.html(this.getExif(item));
 
         html = `<button class="Btn Delete">Delete image</button>`;
         this.$btnDelete.html(html);
 
-        this.$iframe.attr('src', this.mapUrl(latitude, longitude, 17)); //Geolocation on Google Map
+        this.$iframe.attr('src', this.mapUrl(item, 17)); //Geolocation on Google Map
 
         this.$simplemde.value(item.descr);
         this.$btnSave.attr('data-id', item.id);
@@ -104,6 +98,17 @@ class View {
         this.$fileupload.html("");
     }
 
+    //getting location
+    getLocation(item) {
+        var latitude = item.getExif('GPS', 'GPS Latitude');
+        var refLatitude = item.getExif('GPS', 'GPS Latitude Ref');
+        var longitude = item.getExif('GPS', 'GPS Longitude');
+        var refLongitude = item.getExif('GPS', 'GPS Longitude Ref');
+
+        return [latitude, refLatitude, longitude, refLongitude];
+    }
+
+    //conversion DD MM SS,SS to DD.DDDDD format
     latLongConvert(data) {
         var dataString = data.replace(/\s+/g, '').trim();
         dataString = dataString.replace(/[^-,0-9,\s]/g, ' ');
@@ -112,9 +117,23 @@ class View {
         return convertedData;
     }
 
-    mapUrl(latitude, longitude, zoomLevel) {
+    //creating URL for Google Maps 
+    mapUrl(item, zoomLevel) {
+        const [latitude, refLatitude, longitude, refLongitude] = this.getLocation(item);
         let latitudeGrad = this.latLongConvert(latitude);
         let longitudeGrad = this.latLongConvert(longitude);
         return `https://maps.google.com/maps?z=${zoomLevel}&t=k&q=loc:${latitudeGrad}` + `,` + `${longitudeGrad}&output=embed`;
+    }
+
+    //forming of EXIF string
+    getExif(item) {
+        let exifString = `<span class="Name"> Image Info </span> <br> <br>`;
+
+        const [latitude, refLatitude, longitude, refLongitude] = this.getLocation(item);
+        let location = ` <span class="Name">lat</span> ${latitude}${refLatitude} <br> <span class="Name">long</span> ${longitude}${refLongitude} <br> `;
+
+        let exif = exifString + location;
+
+        return exif;
     }
 }

@@ -61,8 +61,11 @@ body {
 }
 
 .Exif {
-    font-size: 12pt;
+    font-size: 10pt;
 }
+.Exif .Name {
+    font-weight: bold;
+}    
 
 /*.row-description {
     border: 1px;
