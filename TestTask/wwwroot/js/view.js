@@ -130,10 +130,11 @@ class View {
         let exifString = `<span class="Name"> Image Info </span> <br> <br>`;
 
         const [latitude, refLatitude, longitude, refLongitude] = this.getLocation(item);
-        let location = ` <span class="Name">lat</span> ${latitude}${refLatitude} <br> <span class="Name">long</span> ${longitude}${refLongitude} <br> `;
+        let location = ` <span class="Name">lat</span> ${latitude}${refLatitude} <br> 
+                        <span class="Name">long</span> ${longitude}${refLongitude} <br> `;
 
-        let exif = exifString + location;
+        exifString += location;
 
-        return exif;
+        return exifString;
     }
 }
