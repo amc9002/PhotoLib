@@ -72,13 +72,7 @@ class View {
         html = `<button class="Btn Delete">Delete image</button>`;
         this.$btnDelete.html(html);
 
-        var zoomLevel = 17;
-
-        let latitudeGrad = this.latLongConvert(latitude);
-        let longitudeGrad = this.latLongConvert(longitude);
-
-        let mapUrl = `https://maps.google.com/maps?z=${zoomLevel}&t=k&q=loc:${latitudeGrad}` + ` ` + `${longitudeGrad}&output=embed`;
-        this.$iframe.attr('src', mapUrl);
+        this.$iframe.attr('src', this.mapUrl(latitude, longitude, 17)); //Geolocation on Google Map
 
         this.$simplemde.value(item.descr);
         this.$btnSave.attr('data-id', item.id);
@@ -111,10 +105,16 @@ class View {
     }
 
     latLongConvert(data) {
-        var dataString = data.replace(/[^0-9,\s]/g, ' ');
+        var dataString = data.replace(/\s+/g, '').trim();
+        dataString = dataString.replace(/[^-,0-9,\s]/g, ' ');
         var dataArray = dataString.split(' ');
-        let convertedData = parseInt(dataArray[0], 10) + parseInt(dataArray[1], 10) / 60 + parseInt(dataArray[2], 10) / 3600;
+        let convertedData = parseInt(dataArray[0], 10) + parseInt(dataArray[1], 10) / 60 + parseFloat(dataArray[2]) / 3600;
         return convertedData;
     }
 
+    mapUrl(latitude, longitude, zoomLevel) {
+        let latitudeGrad = this.latLongConvert(latitude);
+        let longitudeGrad = this.latLongConvert(longitude);
+        return `https://maps.google.com/maps?z=${zoomLevel}&t=k&q=loc:${latitudeGrad}` + `,` + `${longitudeGrad}&output=embed`;
+    }
 }
