@@ -87,7 +87,15 @@ body {
 .Descr .CodeMirror {
     min-height: 0;
     height: calc(100% - 51px);
-}  
+}
+
+.BtnMore {
+    background-color: #ffffff;
+    border: 1px solid black;
+    border-radius: 4px;
+    position: absolute;
+    left: 40%;
+}
 
 .Btn {
     border: 1px solid black;

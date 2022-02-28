@@ -101,11 +101,9 @@ class View {
     //getting location
     getLocation(item) {
         var latitude = item.getExif('GPS', 'GPS Latitude');
-        var refLatitude = item.getExif('GPS', 'GPS Latitude Ref');
         var longitude = item.getExif('GPS', 'GPS Longitude');
-        var refLongitude = item.getExif('GPS', 'GPS Longitude Ref');
 
-        return [latitude, refLatitude, longitude, refLongitude];
+        return [latitude, longitude];
     }
 
     //conversion DD MM SS,SS to DD.DDDDD format
@@ -119,21 +117,50 @@ class View {
 
     //creating URL for Google Maps 
     mapUrl(item, zoomLevel) {
-        const [latitude, refLatitude, longitude, refLongitude] = this.getLocation(item);
+        const [latitude, longitude] = this.getLocation(item);
         let latitudeGrad = this.latLongConvert(latitude);
         let longitudeGrad = this.latLongConvert(longitude);
         return `https://maps.google.com/maps?z=${zoomLevel}&t=k&q=loc:${latitudeGrad}` + `,` + `${longitudeGrad}&output=embed`;
     }
 
+    getDevice(item) {
+        let make = item.getExif('Exif IFD0', 'Make');
+        let model = item.getExif('Exif IFD0', 'Model');
+        let soft = item.getExif('Exif IFD0', 'Software');
+        return ` <span class="Name">Manufacturer</span> ${make} <br> 
+                        <span class="Name">Model</span> ${model} <br> 
+                        <span class="Name">Software</span> ${soft} <br> `;
+    }
+
+    getDateTime(item) {
+        let date = item.getExif('Exif SubIFD', 'Date/Time Original');
+        return ` <span class="Name">Date and time</span> ${date} <br> `;
+    }
+
+    getCompression(item) {
+        let comp = item.getExif('JPEG', 'Compression Type');
+        return ` <span class="Name">Compression</span> ${comp} <br> `;
+    }
+
+    getExposureTime(item) {
+        let exp = item.getExif('Exif SubIFD', 'Exposure Time');
+        return ` <span class="Name">Exposure time</span> ${exp} <br> `;
+    }
+
+    getVersion(item) {
+        let version = item.getExif('Exif SubIFD', 'Exif Version');
+        return ` <span class="Name">Exif Version</span> ${version} <br> `;
+    }
+
     //forming of EXIF string
     getExif(item) {
         let exifString = `<span class="Name"> Image Info </span> <br> <br>`;
-
-        const [latitude, refLatitude, longitude, refLongitude] = this.getLocation(item);
-        let location = ` <span class="Name">lat</span> ${latitude}${refLatitude} <br> 
-                        <span class="Name">long</span> ${longitude}${refLongitude} <br> `;
-
-        exifString += location;
+        exifString += this.getDevice(item);
+        exifString += this.getDateTime(item);
+        exifString += this.getCompression(item);
+        exifString += this.getExposureTime(item);
+        exifString += this.getVersion(item);
+        exifString += `<div><span><button class="BtnMore">More</button></span></div>`;
 
         return exifString;
     }
