@@ -24,4 +24,11 @@ class Image {
         } 
         return null;
     }
+
+    getFullExif() {
+        if (this.exif)
+            return this.exif; 
+        
+        return null;
+    }
 }

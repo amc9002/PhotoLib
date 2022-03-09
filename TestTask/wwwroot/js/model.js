@@ -98,8 +98,6 @@ class Model {
             id: id,
             src: `img / ${name}`,
             descr: `File ${name}`,
-            //lat: Math.random() * 180.0 - 90.0,
-            //long: Math.random() * 360.0 - 180.0
         });
     }
 

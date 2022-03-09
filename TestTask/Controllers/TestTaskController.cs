@@ -116,8 +116,6 @@ namespace TestTask.Controllers
                 img.Src = src;
                 img.Descr = "Something";
                 img.Exif = jsonExif;
-                //img.Lat = 12345;
-                //img.Long = 67890;
 
                 _context.Images.Add(img);
                 _context.SaveChanges();

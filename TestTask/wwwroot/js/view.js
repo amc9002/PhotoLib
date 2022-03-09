@@ -19,6 +19,7 @@ class View {
         this.$btnDelete = $(`.DeleteImage`);
         this.$btnUpload = $('.Upload');
         this.$fileupload = $('.custom-file-input');
+
     }
 
     bind(handlers) {
@@ -61,7 +62,18 @@ class View {
         let html = `<img class="BigImage" src="${item.src}" />`;
         this.$currentImage.html(html);
 
-        this.$exif.html(this.getExif(item));
+        html = this.getExif(item);
+        this.$exif.html(html);
+
+        // bind the 'ShowFullExif' event
+        this.$btnMore = $('.BtnMore');
+        this.$btnMore.off('click');
+        this.$btnMore.on('click', (e) => {
+            $(e.currentTarget);
+            html = this.getFullExif(item);
+            console.log(html);
+        });
+
 
         html = `<button class="Btn Delete">Delete image</button>`;
         this.$btnDelete.html(html);
@@ -87,7 +99,6 @@ class View {
             const id = $(e.currentTarget).attr('data-id');
             handlerDelete(id);
         });
-
     }
 
     cleanImage() {
@@ -154,14 +165,38 @@ class View {
 
     //forming of EXIF string
     getExif(item) {
-        let exifString = `<span class="Name"> Image Info </span> <br> <br>`;
-        exifString += this.getDevice(item);
-        exifString += this.getDateTime(item);
-        exifString += this.getCompression(item);
-        exifString += this.getExposureTime(item);
-        exifString += this.getVersion(item);
-        exifString += `<div><span><button class="BtnMore">More</button></span></div>`;
+        const exifArr = [];
+        exifArr.push(`<span class="Name"> Image Info </span> <br> <br>`);
+        exifArr.push(this.getDevice(item));
+        exifArr.push(this.getDateTime(item));
+        exifArr.push(this.getCompression(item));
+        exifArr.push(this.getExposureTime(item));
+        exifArr.push(this.getVersion(item));
+        exifArr.push(`<div><span><button class="BtnMore">More</button></span></div>`);
 
-        return exifString;
+        return exifArr.join();
+    }
+
+    getFullExif(item) {
+        if (item.getFullExif()) {
+            const exifArr = [];
+            exifArr.push(`<span class="FullHTML">`);
+            var group = item.getFullExif();
+            for (var i = 0; i < group.length; i++) {               
+                exifArr.push(`${group[i].Name}`)
+                exifArr.push(`: `);
+                exifArr.push("<br>");
+                var tags = group[i].Tags;
+                for (var j = 0; j < tags.length; j++) {
+                    exifArr.push(`${tags[j].Name}`);
+                    exifArr.push(`: `);
+                    exifArr.push(`${tags[j].Description}`);
+                    exifArr.push("<br>");
+                }
+            }
+
+            return exifArr.join().replace(/[,]/gi, ''); // removing ","
+
+        }
     }
 }
