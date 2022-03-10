@@ -101,6 +101,9 @@ body {
     border: 1px solid black;
 }
 
+.groupName {
+    font-weight: bold;
+}
 /*.Btn:hover {
     font-weight: bold;
     border: 2px solid black;

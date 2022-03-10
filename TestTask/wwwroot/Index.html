@@ -5,8 +5,9 @@
     <link href="css/site.css" rel="stylesheet">
     <link href="lib/simplemde/simplemde.min.css" rel="stylesheet">
 
-    <script src="lib/bootstrap/dist/js/bootstrap.min.js"></script>
     <script src="lib/jquery/dist/jquery.min.js"></script>
+    <script src="lib/bootstrap/dist/js/bootstrap.min.js"></script>
+
 
 </head>
 <body>
@@ -15,50 +16,69 @@
             <div class="col-12 ImageList"></div>
         </div>
 
-            <div class="row d-flex row-details">
-                <div class="col-5 CurrentImage"></div>
+        <div class="row d-flex row-details">
+            <div class="col-5 CurrentImage"></div>
 
-                <div class="col-2 Exif"></div>
+            <div class="col-2 Exif"></div>
 
-                <!--Google map-->
-                <div class="col-5 Gmap"  map-container>
-                    <iframe width="400" height="400" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src=""></iframe>
-                </div>
-                <!--Google Maps-->
+            <!--Google map-->
+            <div class="col-5 Gmap" map-container>
+                <iframe width="400" height="400" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src=""></iframe>
+            </div>
+            <!--Google Maps-->
+        </div>
+
+        <div class="row d-flex row-description">
+            <div class="col Descr">
+                <textarea>Description here</textarea>
+            </div>
+            <div>
+                <span><button class="Btn Save">Save description</button></span>
+            </div>
+            <div>
+                <span class="DeleteImage"></span>
             </div>
 
-            <div class="row d-flex row-description">
-                <div class="col Descr">
-                    <textarea>Description here</textarea>
-                </div>
-                <div>
-                    <span><button class="Btn Save">Save description</button></span>
-                </div>
-                <div>
-                    <span class="DeleteImage"></span>
-                </div>
+        </div>
 
+        <div class="row row-upload">
+            <div class="col-5 custom-file" id="customFile">
+                <input type="file" class="custom-file-input" id="inputFile">
+                <label class="custom-file-label Descr" for="inputFile">
+                    Select file...
+                </label>
             </div>
+            <div class="col-7">
+                <button class="Btn Upload" id="upload-button"> Upload and preview </button>
+            </div>
+        </div>
+    </div>
 
-            <div class="row row-upload">
-                <div class="col-5 custom-file" id="customFile">
-                    <input type="file" class="custom-file-input" id="inputFile">
-                    <label class="custom-file-label Descr" for="inputFile">
-                        Select file...
-                    </label>
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle">Info</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
                 </div>
-                <div class="col-7">
-                    <button class="Btn Upload" id="upload-button"> Upload and preview </button>
+                <div class="modal-body">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                 </div>
             </div>
         </div>
+    </div>
 
-        <script src="lib/simplemde/simplemde.min.js"></script>
-        <script src="js/image.js"></script>
-        <script src="js/model.js"></script>
-        <script src="js/view.js"></script>
-        <script src="js/controller.js"></script>
-        <script src="js/app.js"></script>
-        <script src="js/site.js"></script>
+    <script src="lib/simplemde/simplemde.min.js"></script>
+    <script src="js/image.js"></script>
+    <script src="js/model.js"></script>
+    <script src="js/view.js"></script>
+    <script src="js/controller.js"></script>
+    <script src="js/app.js"></script>
+    <script src="js/site.js"></script>
 </body>
 </html>

@@ -19,6 +19,7 @@ class View {
         this.$btnDelete = $(`.DeleteImage`);
         this.$btnUpload = $('.Upload');
         this.$fileupload = $('.custom-file-input');
+        this.$modal = $('.modal-body');
 
     }
 
@@ -71,7 +72,7 @@ class View {
         this.$btnMore.on('click', (e) => {
             $(e.currentTarget);
             html = this.getFullExif(item);
-            console.log(html);
+            this.$modal.html(html);
         });
 
 
@@ -172,9 +173,9 @@ class View {
         exifArr.push(this.getCompression(item));
         exifArr.push(this.getExposureTime(item));
         exifArr.push(this.getVersion(item));
-        exifArr.push(`<div><span><button class="BtnMore">More</button></span></div>`);
+        exifArr.push(`<div><span><button class="BtnMore" data-toggle="modal" data-target="#exampleModalLong">More</button></span></div>`); //Button "More" opens a Bootstrap modal window
 
-        return exifArr.join();
+        return exifArr.join().replace(/[,]/gi, ''); // removing ","
     }
 
     getFullExif(item) {
@@ -183,7 +184,7 @@ class View {
             exifArr.push(`<span class="FullHTML">`);
             var group = item.getFullExif();
             for (var i = 0; i < group.length; i++) {               
-                exifArr.push(`${group[i].Name}`)
+                exifArr.push(`<span class="groupName">${group[i].Name}</span>`)
                 exifArr.push(`: `);
                 exifArr.push("<br>");
                 var tags = group[i].Tags;
@@ -194,7 +195,7 @@ class View {
                     exifArr.push("<br>");
                 }
             }
-
+            exifArr.push("</span>");
             return exifArr.join().replace(/[,]/gi, ''); // removing ","
 
         }
