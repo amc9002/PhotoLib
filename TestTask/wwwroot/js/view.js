@@ -76,7 +76,7 @@ class View {
         });
 
 
-        html = `<button class="Btn Delete">Delete image</button>`;
+        html = `<button class="Delete btn btn-secondary">Delete image</button>`;
         this.$btnDelete.html(html);
 
         this.$iframe.attr('src', this.mapUrl(item, 17)); //Geolocation on Google Map
@@ -167,13 +167,12 @@ class View {
     //forming of EXIF string
     getExif(item) {
         const exifArr = [];
-        exifArr.push(`<span class="Name"> Image Info </span> <br> <br>`);
         exifArr.push(this.getDevice(item));
         exifArr.push(this.getDateTime(item));
         exifArr.push(this.getCompression(item));
         exifArr.push(this.getExposureTime(item));
         exifArr.push(this.getVersion(item));
-        exifArr.push(`<div><span><button class="BtnMore" data-toggle="modal" data-target="#exampleModalLong">More</button></span></div>`); //Button "More" opens a Bootstrap modal window
+        exifArr.push(`<div><span><button class="BtnMore btn btn-secondary" data-toggle="modal" data-target="#exampleModalLong">More</button></span></div>`); //Button "More" opens a Bootstrap modal window
 
         return exifArr.join().replace(/[,]/gi, ''); // removing ","
     }
