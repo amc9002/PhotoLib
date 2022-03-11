@@ -141,9 +141,13 @@ namespace TestTask.Controllers
         }
 
         [HttpPut]
-        public IActionResult Put(Image updatedImage)
+        public IActionResult Put(Image updatedDescrImage)
         {
-            _context.Images.Update(updatedImage);
+            Image imageForUpdating = _context.Images
+                .Where(x => x.Id == updatedDescrImage.Id)
+                .FirstOrDefault();
+            imageForUpdating.Descr = updatedDescrImage.Descr;
+            _context.Images.Update(imageForUpdating);
             _context.SaveChanges();
 
             return NoContent();
@@ -153,10 +157,10 @@ namespace TestTask.Controllers
         [HttpDelete("{id}")]
         public IActionResult Delete(long id)
         {
-
-            _context.Images.Remove(_context.Images
+            Image imageToRemove = _context.Images
                 .Where(x => x.Id == id)
-                .FirstOrDefault());
+                .FirstOrDefault();
+            _context.Images.Remove(imageToRemove);
             _context.SaveChanges();
 
             return NotFound();

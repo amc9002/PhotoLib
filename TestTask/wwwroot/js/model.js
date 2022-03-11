@@ -138,13 +138,17 @@ class Model {
         }
         else {
             let url = `${document.location.href}testtask`;
+            const itemCopy = {
+                id: item.id,
+                descr: item.descr
+            };
             fetch(url, {
                 method: 'PUT',
                 cache: 'no-cache',
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify(item)
+                body: JSON.stringify(itemCopy)
             });
         }
 
