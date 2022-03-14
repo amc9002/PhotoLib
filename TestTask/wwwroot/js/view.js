@@ -112,8 +112,8 @@ class View {
 
     //getting location
     getLocation(item) {
-        var latitude = item.getExif('GPS', 'GPS Latitude');
-        var longitude = item.getExif('GPS', 'GPS Longitude');
+        var latitude = item.getExif('GPS', 'GPS Latitude') || "";
+        var longitude = item.getExif('GPS', 'GPS Longitude') || "";
 
         return [latitude, longitude];
     }
@@ -130,37 +130,40 @@ class View {
     //creating URL for Google Maps 
     mapUrl(item, zoomLevel) {
         const [latitude, longitude] = this.getLocation(item);
-        let latitudeGrad = this.latLongConvert(latitude);
-        let longitudeGrad = this.latLongConvert(longitude);
-        return `https://maps.google.com/maps?z=${zoomLevel}&t=k&q=loc:${latitudeGrad}` + `,` + `${longitudeGrad}&output=embed`;
+        if (latitude && longitude) {
+            let latitudeGrad = this.latLongConvert(latitude);
+            let longitudeGrad = this.latLongConvert(longitude);
+            return `https://maps.google.com/maps?z=${zoomLevel}&t=k&q=loc:${latitudeGrad}` + `,` + `${longitudeGrad}&output=embed`;
+        }
+        return `No location data`;
     }
 
     getDevice(item) {
-        let make = item.getExif('Exif IFD0', 'Make');
-        let model = item.getExif('Exif IFD0', 'Model');
-        let soft = item.getExif('Exif IFD0', 'Software');
+        let make = item.getExif('Exif IFD0', 'Make') || "";
+        let model = item.getExif('Exif IFD0', 'Model') || "";
+        let soft = item.getExif('Exif IFD0', 'Software') || "";
         return ` <span class="Name">Manufacturer</span> ${make} <br> 
                         <span class="Name">Model</span> ${model} <br> 
                         <span class="Name">Software</span> ${soft} <br> `;
     }
 
     getDateTime(item) {
-        let date = item.getExif('Exif SubIFD', 'Date/Time Original');
+        let date = item.getExif('Exif SubIFD', 'Date/Time Original') || "";
         return ` <span class="Name">Date and time</span> ${date} <br> `;
     }
 
     getCompression(item) {
-        let comp = item.getExif('JPEG', 'Compression Type');
+        let comp = item.getExif('JPEG', 'Compression Type') || "";
         return ` <span class="Name">Compression</span> ${comp} <br> `;
     }
 
     getExposureTime(item) {
-        let exp = item.getExif('Exif SubIFD', 'Exposure Time');
+        let exp = item.getExif('Exif SubIFD', 'Exposure Time') || "";
         return ` <span class="Name">Exposure time</span> ${exp} <br> `;
     }
 
     getVersion(item) {
-        let version = item.getExif('Exif SubIFD', 'Exif Version');
+        let version = item.getExif('Exif SubIFD', 'Exif Version') || "";
         return ` <span class="Name">Exif Version</span> ${version} <br> `;
     }
 
@@ -182,7 +185,7 @@ class View {
             const exifArr = [];
             exifArr.push(`<span class="FullHTML">`);
             var group = item.getFullExif();
-            for (var i = 0; i < group.length; i++) {               
+            for (var i = 0; i < group.length; i++) {
                 exifArr.push(`<span class="groupName">${group[i].Name}</span>`)
                 exifArr.push(`: `);
                 exifArr.push("<br>");
