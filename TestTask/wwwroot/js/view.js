@@ -123,8 +123,8 @@ class View {
         var dataString = data.replace(/\s+/g, '').trim();
         dataString = dataString.replace(/[^-,0-9,\s]/g, ' ');
         var dataArray = dataString.split(' ');
-        let convertedData = parseInt(dataArray[0], 10) + parseInt(dataArray[1], 10) / 60 + parseFloat(dataArray[2]) / 3600;
-        return convertedData;
+        let convertedData = parseInt(Math.abs(dataArray[0], 10)) + parseInt(dataArray[1], 10) / 60 + parseFloat(dataArray[2]) / 3600;
+        return convertedData * Math.sign(dataArray[0]);
     }
 
     //creating URL for Google Maps 
