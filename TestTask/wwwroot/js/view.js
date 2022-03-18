@@ -124,7 +124,7 @@ class View {
         dataString = dataString.replace(/[^-,0-9,\s]/g, ' ');
         var dataArray = dataString.split(' ');
         let convertedData = parseInt(Math.abs(dataArray[0], 10)) + parseInt(dataArray[1], 10) / 60 + parseFloat(dataArray[2]) / 3600;
-        return convertedData * Math.sign(dataArray[0]);
+        return convertedData * Math.sign(dataArray[0]); //location may be negative
     }
 
     //creating URL for Google Maps 
@@ -191,9 +191,13 @@ class View {
                 exifArr.push("<br>");
                 var tags = group[i].Tags;
                 for (var j = 0; j < tags.length; j++) {
+
                     exifArr.push(`${tags[j].Name}`);
                     exifArr.push(`: `);
-                    exifArr.push(`${tags[j].Description}`);
+                    if (tags[j].Name === `GPS Latitude` || tags[j].Name === `GPS Longitude`)
+                        exifArr.push(`${tags[j].Description.replace(/[,]/gi, '.')}`);
+                    else
+                        exifArr.push(`${tags[j].Description}`);
                     exifArr.push("<br>");
                 }
             }
