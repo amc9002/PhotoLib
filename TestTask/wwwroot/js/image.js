@@ -1,13 +1,7 @@
 'use strict';
 
 class Image {
-    constructor(id, src, descr, exif) {
-        this.id = id;
-        this.src = src;
-        this.descr = descr;
-        this.exif = exif;
-
-    }
+    constructor() { }
 
     static fromGenericObject(obj) {
         const img = new Image();

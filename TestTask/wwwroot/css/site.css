@@ -51,7 +51,6 @@ body {
 }
 
 .CurrentImage {
-    /*border: 2px dotted blue;*/
     height: 100%;
 }
 
@@ -97,8 +96,3 @@ body {
     height: 500px; 
     padding: 40px;
 }
-
-/*.Btn:hover {
-    font-weight: bold;
-    border: 2px solid black;
-}*/

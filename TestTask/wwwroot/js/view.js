@@ -1,6 +1,6 @@
 'use strict';
 
-//import * as simplemdeMin from "../lib/simplemende/simplemde.min";
+//import * as simplemdeMin from "../lib/simplemde/simplemde.min";
 
 class View {
 
