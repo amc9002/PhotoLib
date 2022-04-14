@@ -21,11 +21,12 @@ class Controller {
             this.showAll();
             this.view.editImage(itemImg, this.handlers);
         };
+        const errorHandler = (text) =>  alert(text);
 
         const data = new FormData();
         data.append("file", fileupload.files[0]);
-
-        this.model.create(data, callback);
+        
+        this.model.create(data, errorHandler, callback);
     }
 
     showAll() {

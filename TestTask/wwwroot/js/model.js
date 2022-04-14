@@ -8,6 +8,7 @@ class Model {
                 id: 1,
                 src: "img/nintchdbpict000177689785.jpg",
                 descr: "Queen Elizabeth II",
+
             },
             {
                 id: 2,
@@ -53,7 +54,7 @@ class Model {
     }
 
 
-    create(data, callback) {
+    create(data, errorHandler, callback) {
         if (document.location.href.indexOf(`github.io`) !== -1
             || window.location.origin === `file://`) {
 
@@ -61,14 +62,34 @@ class Model {
             callback();
         }
         else {
-            let url = `${document.location.href}testtask`;
+            let url = `${document.location.href}test_task`;
             fetch(url, {
                 method: 'POST',
                 cache: 'no-cache',
                 body: data
             })
-                .then(response => response.json())
-                .then(data => callback(data));
+                .then(response => {
+                    if (response.status == 200) {
+                        response.json()
+                            .then(data => callback(data))
+                    }
+
+                    else {
+                        response.text()
+                            .then(text => {
+                                errorHandler(text);
+                            })
+                            .catch(error => {
+                                errorHandler(error);
+                                console.log('caught it! 1', error);
+                            });
+                    }
+                })
+                .catch(error => {
+                    errorHandler(error);
+                    console.log('caught it! 2', error);
+                });
+
         }
     }
 
@@ -147,7 +168,7 @@ class Model {
                 method: 'DELETE',
                 cache: 'no-cache'
             })
-                .then(() => callback());   
+                .then(() => callback());
         }
 
     }

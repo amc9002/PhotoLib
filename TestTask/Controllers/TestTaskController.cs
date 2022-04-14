@@ -25,7 +25,7 @@ namespace TestTask.Controllers
         }
 
         [HttpPost]
-        public Image Post(IFormFile file)
+        public IActionResult Post(IFormFile file)
         {
             string src = null;
             if (file != null && file.Length > 0)
@@ -35,29 +35,49 @@ namespace TestTask.Controllers
                 {
                     file.CopyTo(ms);
                     var fileBytes = ms.ToArray();
-                    src = "data:" + file.ContentType + ";base64," + Convert.ToBase64String(fileBytes);
-
-                    using (var streamForExtractingExif = new MemoryStream(fileBytes))
+                    if (IsValidImage(fileBytes))
                     {
-                        var exif = ImageMetadataReader.ReadMetadata(streamForExtractingExif);
-                        jsonExif = JsonSerializer.Serialize(exif);
-                        
+                        src = "data:" + file.ContentType + ";base64," + Convert.ToBase64String(fileBytes);
+
+                        using (var streamForExtractingExif = new MemoryStream(fileBytes))
+                        {
+                            var exif = ImageMetadataReader.ReadMetadata(streamForExtractingExif);
+                            jsonExif = JsonSerializer.Serialize(exif);
+                        }
+                        var img = new Image();
+                        img.Src = src;
+                        img.Descr = "Something";
+                        img.Exif = jsonExif;
+
+                        _context.Images.Add(img);
+                        _context.SaveChanges();
+
+                        return Ok(img);
+                    }
+                    else
+                    {
+                        return BadRequest("Not valid type of file");
                     }
                 }
-
-                var img = new Image();
-                img.Src = src;
-                img.Descr = "Something";
-                img.Exif = jsonExif;
-
-                _context.Images.Add(img);
-                _context.SaveChanges();
-
-                return img;
             }
-
-            return null;
+            return BadRequest("File is empty or doesn't exist");
         }
+
+        private bool IsValidImage(byte[] filebytes)
+        {
+            using (var streamForValidation = new MemoryStream(filebytes))
+                try
+                {
+                    var isValidImage = System.Drawing.Image.FromStream(streamForValidation);
+                }
+                catch
+                {
+                    return false;
+                }
+
+            return true;
+        }
+
 
         [HttpGet]
         public IEnumerable<Image> Get()
