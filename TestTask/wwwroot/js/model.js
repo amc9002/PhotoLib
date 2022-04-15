@@ -81,13 +81,13 @@ class Model {
                             })
                             .catch(error => {
                                 errorHandler(error);
-                                console.log('caught it! 1', error);
+                                console.log('Error 1 in CREATE method caught!', error);
                             });
                     }
                 })
                 .catch(error => {
                     errorHandler(error);
-                    console.log('caught it! 2', error);
+                    console.log('Error 2 in CREATE method caught!', error);
                 });
 
         }
@@ -102,7 +102,7 @@ class Model {
         });
     }
 
-    read(id, callback) {
+    read(id, errorHandler, callback) {
 
         if (document.location.href.indexOf(`github.io`) !== -1
             || window.location.origin === `file://`) {
@@ -120,13 +120,34 @@ class Model {
             }
 
             fetch(url, callback)
-                .then(response => response.json())
-                .then(data => {
-                    const obj = (id !== null) ? Image.fromGenericObject(data) : data.map((ob) => Image.fromGenericObject(ob));
-                    callback(obj);
+                .then(response => {
+                    if (response.status == 200) {
+                        response.json()
+                            .then(data => {
+                                const obj = (id !== null) ? Image.fromGenericObject(data) : data.map((ob) => Image.fromGenericObject(ob));
+                                callback(obj);
+                            })
+                    }
+                    else {
+                        response.text()
+                            .then(text => {
+                                errorHandler(text);
+                            })
+                            .catch(error => {
+                                errorHandler(error);
+                                console.log('Error 1 in READ method caught!', error);
+                            });
+                    }
+                })
+                .catch(error => {
+                    errorHandler(error);
+                    console.log('Error 2 in READ method caught!', error);
                 });
+
         }
+
     }
+
 
     update(id, item) {
         if (document.location.href.indexOf(`github.io`) !== -1

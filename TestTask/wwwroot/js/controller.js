@@ -35,7 +35,7 @@ class Controller {
         const callback = (data) => {
             this.view.showImages(data, this.handlers);
         }
-        this.model.read(null, callback);
+        this.model.read(null, null, callback);
     }
 
     editImage(id) {
@@ -43,7 +43,9 @@ class Controller {
             if (itemImg !== null)
                 this.view.editImage(itemImg, this.handlers);
         }
-        this.model.read(id, callback);
+        const errorHandler = (text) => alert(text);
+
+        this.model.read(id, errorHandler, callback);
     }
 
 

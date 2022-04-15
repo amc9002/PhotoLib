@@ -86,11 +86,14 @@ namespace TestTask.Controllers
         }
 
         [HttpGet("{id}")]
-        public Image Get(long id)
+        public IActionResult Get(long id)
         {
-            return _context.Images
+            if (!_context.Images.Any(x => id == x.Id))
+                return BadRequest("File not found or doesn't exist");
+
+            return Ok(_context.Images
                 .Where(x => x.Id == id)
-                .FirstOrDefault();
+                .FirstOrDefault());
         }
 
         [HttpPut]
