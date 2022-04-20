@@ -62,7 +62,7 @@ class Model {
             callback();
         }
         else {
-            let url = `${document.location.href}test_task`;
+            let url = `${document.location.href}testtask`;
             fetch(url, {
                 method: 'POST',
                 cache: 'no-cache',
