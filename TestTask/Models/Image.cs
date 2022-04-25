@@ -1,13 +1,16 @@
-using System;
+using System.Collections.Generic;
 
-namespace TestTask
+namespace TestTask.Models
 {
     public class Image
     {
-        public long Id { get; set; }
+        public long ImageId { get; set; }
         public string Src { get; set; }
         public byte[] BitImg { get; set; }
         public string Descr { get; set; }
         public string Exif { get; set; }
+        public virtual IList<Tag> Tags { get; set; }
+
     } 
+
 }

@@ -88,11 +88,11 @@ namespace TestTask.Controllers
         [HttpGet("{id}")]
         public IActionResult Get(long id)
         {
-            if (!_context.Images.Any(x => id == x.Id))
+            if (!_context.Images.Any(x => id == x.ImageId))
                 return BadRequest("File not found or doesn't exist");
 
             return Ok(_context.Images
-                .Where(x => x.Id == id)
+                .Where(x => x.ImageId == id)
                 .FirstOrDefault());
         }
 
@@ -100,7 +100,7 @@ namespace TestTask.Controllers
         public IActionResult Put(Image updatedDescrImage)
         {
             Image imageForUpdating = _context.Images
-                .Where(x => x.Id == updatedDescrImage.Id)
+                .Where(x => x.ImageId == updatedDescrImage.ImageId)
                 .FirstOrDefault();
             imageForUpdating.Descr = updatedDescrImage.Descr;
             _context.Images.Update(imageForUpdating);
@@ -114,7 +114,7 @@ namespace TestTask.Controllers
         public IActionResult Delete(long id)
         {
             Image imageToRemove = _context.Images
-                .Where(x => x.Id == id)
+                .Where(x => x.ImageId == id)
                 .FirstOrDefault();
             _context.Images.Remove(imageToRemove);
             _context.SaveChanges();
