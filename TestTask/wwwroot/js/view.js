@@ -42,7 +42,7 @@ class View {
         // create images
         let html = '';
         data.forEach((x) => {
-            html += `<div class="item" data-id="${x.id}">`
+            html += `<div class="item" data-id="${x.imageId}">`
                 + `<img src="${x.src}">`
                 + `</div>`;
         });
@@ -82,8 +82,8 @@ class View {
         this.$iframe.attr('src', this.mapUrl(item, 17)); //Geolocation on Google Map
 
         this.$simplemde.value(item.descr);
-        this.$btnSave.attr('data-id', item.id);
-        this.$btnDelete.attr('data-id', item.id);
+        this.$btnSave.attr('data-id', item.imageId);
+        this.$btnDelete.attr('data-id', item.imageId);
 
         // bind the 'EditDescription' event
         const handlerEdit = handlers['EditDescription'];

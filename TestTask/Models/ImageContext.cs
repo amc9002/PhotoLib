@@ -6,6 +6,7 @@ namespace TestTask.Models
     {
         public DbSet<Image> Images { get; set; }
         public DbSet<Tag> Tags { get; set; }
+        public DbSet<ImageTag> ImageTags { get; set; }
         public ImageContext(DbContextOptions<ImageContext> options)
             : base(options)
         {

@@ -9,7 +9,7 @@ namespace TestTask.Models
         public byte[] BitImg { get; set; }
         public string Descr { get; set; }
         public string Exif { get; set; }
-        public virtual IList<Tag> Tags { get; set; }
+        public IList<ImageTag> ImageTags { get; set; }
 
     } 
 
